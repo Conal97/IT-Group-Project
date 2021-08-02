@@ -6,33 +6,38 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Rango says...</h1>
+<h1>Welcome!</h1>
+<div> 
+    <img src="{% static 'images/ben_macdui.jpeg'%}"
+    alt = "Ben Lomond picture" />
+</div>
     <div>
         {% if user.is_authenticated %} 
-            Howdy {{ user.username}}! <br />
+            Hello {{ user.username}}! <br />
+            Welcome to Generic App Name.com
         {% else %}
-        Hey there partner! <br />
+        Hello!<br />
+        Welcome to Generic App Name.com
         {% endif %}
-        <strong>{{boldmessage }}</strong>
     </div>
     <div>
-    <h2>Most Liked Categories</h2>
-    {% if categories %}
+    <h2>Most Liked Munros</h2>
+    {% if munros %}
         <ul>
-        {%for category in categories %}
+        {%for munro in munros%}
             <li>
                 <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
             </li>
         {% endfor %}
         </ul>
     {% else %}
-        <strong>There are no categories present.</strong>
+        <strong>No Munros to display :(</strong>
     {% endif %}
     </div>
-    <h2>Most Viewed Pages</h2>
+    <h2>Most Liked Photos</h2>
     {% if categories %}
         <ul>
-        {%for page in pages %}
+        {%for photo in photos %} <!--dunno how this will work -->
             <li>
                 <a href='{{ page.url }}'>{{ page.title }}</a>
             </li>
@@ -43,7 +48,6 @@
     {% endif %}
     </div>
 
-    <img src="{% static 'images/rango.jpeg'%}"
-    alt = "Picture of Rango" />
+
 {% endblock %}
 
