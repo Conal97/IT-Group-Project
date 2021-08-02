@@ -6,6 +6,16 @@ from django.contrib.auth.models import User
 class Area(models.Model):
     name = models.CharField(max_length=128, unique = True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Area, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural='Areas'
+
+    def __str__(self):
+        return self.name
+
 class Munro(models.Model):
     name = models.CharField(max_length = 128, unique=True)
     area = models.CharField(max_length = 128, default = "")
@@ -34,9 +44,16 @@ class Hiker(models.Model):
     def __str__(self):
         return self.user.username
 
+    class Meta:
+        verbose_name_plural='Hikers'
+
 class Report(models.Model):
+
     author = models.OneToOneField(Hiker, on_delete=CASCADE)
     munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField
+
+    def __str__(self):
+        return self.munro.name
