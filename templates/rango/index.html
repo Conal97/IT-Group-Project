@@ -35,7 +35,7 @@
     {% endif %}
     </div>
     <h2>Most Liked Photos</h2>
-    {% if categories %}
+    {% if photos %}
         <ul>
         {%for photo in photos %} <!--dunno how this will work -->
             <li>
@@ -44,7 +44,7 @@
         {% endfor %}
         </ul>
     {% else %}
-        <strong>There are no pages present.</strong>
+        <strong>No photos to display :(</strong>
     {% endif %}
     </div>
 
