@@ -1,3 +1,4 @@
+from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, HikeReportForm
 from typing import OrderedDict
@@ -21,7 +22,6 @@ def munro(request, munro_name_slug):
     except Munro.DoesNotExist: 
         context_dict['munro'] = None
     return render(request, 'rango/munro.html', context=context_dict)
-
 
 @login_required
 def hike_report(request):
@@ -99,6 +99,19 @@ def about(request):
     context_dict = {'boldmessage': 'This tutorial has been put together by William'}
     context_dict['visits'] = request.session['visits']
     return render(request, 'rango/about.html', context=context_dict)
+
+def search(request):
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Use the bing search function
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list':result_list})
+
 
 def show_category(request, category_name_slug):
     #create a context dictionary(will be passed to html file)
