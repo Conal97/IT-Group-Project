@@ -24,12 +24,13 @@
      <!-- Custom styles for this template -->
      <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
     
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
      <!-- Custom CSS for given page-->
     {% block css %}  
     {% endblock %}
-    
-    <link rel="stylesheet" href="index.css">
-    
+   
     </head>
 
      <body>
@@ -63,8 +64,16 @@
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'rango:areas' %}">Search By Area</a></li> 
                     {% endblock %}
+
+                    <div class="input-group col-12">
+                        <div class="form-outline col-9 pr-0">
+                          <input type="search" placeholder="search area" id="form1" class="form-control" />
+                          <!-- <label class="form-label" for="form1">Search</label> -->
+                        </div>
+                        <button type="button" class="btn btn-primary col-3 pl-0">
+                          <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </nav>
                 
