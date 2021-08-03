@@ -5,6 +5,7 @@
 
 <html lang="en">
     <head>
+<<<<<<< Updated upstream
          <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -70,6 +71,41 @@
                     </footer>
                 </main>
             </div>
+=======
+        <title>
+            Rango - 
+            {% block title_block %}
+                Generic Hillwalking App Name
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <div>
+            {% block sidebar_block %}
+              
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <ul>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'rango:restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'auth_logout' %}?next={% url 'rango:index' %}">Logout</a></li>
+                <li><a href="{% url 'rango:add_category' %}">Add a New Category</a></li>
+                <li><a href="{% url 'auth_password_change' %}">Change your Password</a></li>
+                {% else %}
+                <li><a href="{% url  'registration_register' %}">Sign Up</a></li>
+                <li><a href="{% url 'auth_login' %}">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'rango:areas' %}">Search By Area</a></li>    
+                <li><a href="{% url 'rango:about' %}">About</a></li>
+                <li><a href="{% url 'rango:index' %}">Index</a></li>
+            </ul>
+>>>>>>> Stashed changes
         </div>
         
         <!-- Bootstrap core JavaScript -->

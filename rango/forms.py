@@ -47,7 +47,17 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website', 'picture',)
 
+<<<<<<< Updated upstream
 class HikeReportForm(forms.ModelForm):
+=======
+
+
+class HikeReportForm(forms.ModelForm):
+    report_text = forms.CharField(max_length=3000,
+                            help_text='Enter your report here.')
+    difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
+
+>>>>>>> Stashed changes
     class Meta:
         model = Report
         fields = ('difficulty', 'report_text')

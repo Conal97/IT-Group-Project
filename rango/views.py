@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils import timezone
 
+<<<<<<< Updated upstream
 def munro(request, munro_name_slug):
     context_dict = {}
     context_dict['details'] = "Details: "
@@ -22,6 +23,8 @@ def munro(request, munro_name_slug):
         context_dict['munro'] = None
     return render(request, 'rango/munro.html', context=context_dict)
 
+=======
+>>>>>>> Stashed changes
 
 @login_required
 def hike_report(request):
@@ -35,7 +38,11 @@ def hike_report(request):
             return redirect('/review') 
     else: 
          form=HikeReportForm() 
+<<<<<<< Updated upstream
     return render(request, 'rango/post_report.html', {'form': form}) 
+=======
+    return render(request, 'review/post_report.html', {'form': form}) 
+>>>>>>> Stashed changes
 
 
 def area(request):

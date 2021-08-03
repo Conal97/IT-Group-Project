@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 Max_Length = 128
 
@@ -54,8 +56,16 @@ class Report(models.Model):
     author = models.OneToOneField(Hiker, on_delete=CASCADE)
     munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to ='report_images', blank = True)
+<<<<<<< Updated upstream
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
+=======
+    difficulty = models.IntegerField(default = 0,
+                                    validators=[MaxValueValidator(10), MinValueValidator(1)])
+    report_text = models.CharField
+    date = models.DateTimeField(auto_now_add=True)
+
+>>>>>>> Stashed changes
 
     def __str__(self):
         return self.munro.name
