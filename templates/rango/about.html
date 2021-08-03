@@ -1,21 +1,29 @@
 {% extends 'rango/base.html' %}
-
-{% load static %}
+{% load staticfiles %}
 
 {% block title_block %}
-    About
+    AboutPage
 {% endblock %}
 
 {% block body_block %}
-<h1>About generic app name</h1>
-<div>
-    here is the about page. <br/>
-</div>
 
+    <h5 class="card-text p-2"> Here at Rango our passion is hiking. There is no better place to hike than the Scottish Highlands. That is why we have developed
+        this website to help you on your next hike. Search our database of Munros and areas for the perfect hike. 
+    </h5>
+    <div class="container p-2">
+            <div class="row">
+                 <div class="col-lg-6 mb-4">
+                     <p>How many Munros have you bagged? What Munro will be next on your list? What Munro do other hikers like? 
+                         All these questions will be answered if you sign up. What are you waiting for?</p>
+                 </div>
+ 
+                 <div class="col-lg-6 mb-4">
+                    <p>Find your next Munro. Get directions. Read reviews. All this and more. Write a review for a Munro you've recently
+                     climbed if you verify yourselves as a legitimate Hiker. Get hiking!</p> 
+                 </div>
+            </div>
+    </div>
 
-<div>
-
-</div>
 {% endblock %}
 
 
