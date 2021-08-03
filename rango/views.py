@@ -96,8 +96,7 @@ def index(request):
     return response
 
 def about(request):
-    context_dict = {'boldmessage': 'This tutorial has been put together by William'}
-    context_dict['visits'] = request.session['visits']
+    context_dict = {'pageheading': 'About Rango'}
     return render(request, 'rango/about.html', context=context_dict)
 
 def search(request):
@@ -186,7 +185,8 @@ def restricted(request):
     return render(request, 'rango/restricted.html')
 
 def photo_gallery(request):
-    return render(request, 'rango/photo_gallery.html')
+    context_dict = {'pageheading': 'Photo Gallery'}
+    return render(request, 'rango/photo_gallery.html', context = context_dict)
 
 '''def register(request):
 
