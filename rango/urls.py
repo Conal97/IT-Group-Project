@@ -19,5 +19,6 @@ urlpatterns = [
     path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
     path('<slug:area_name_slug>/<slug:munro_name_slug>/', views.munro, name='munro'),
     path('post-report', views.hike_report, name='hike_report'),
-    path('search',views.search, name='search'),
+    path('search', views.search, name='search'),
+    path('photo_gallery/', views.photo_gallery, name='photo_gallery'),
 ]

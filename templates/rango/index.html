@@ -12,16 +12,16 @@
 {% block body_block %}
 <h1>Discover your next perfect adventure!</h1>
 
-    <div class="p-2">
+    <div class="p-3">
         {% if user.is_authenticated %} 
             Hello {{ user.username}}! <br />
         {% endif %}
-        <h5>Wherever you are in the Scottish highlands, we have you covered. Find your next hike today, browse our photo gallery for your daily fix of that
-            sweet sweet highland scenery or find a buddy to hike with. The possibilities are endless with Rango. </h5>
+        <p class="card-text">Wherever you are in the Scottish highlands, we have you covered. Find your next hike today, browse our photo gallery for your daily fix of that
+            sweet sweet highland scenery or find a buddy to hike with. The possibilities are endless with Rango. </p>
     </div>
 
     <section id="gallery">
-        <div class="container">
+        <div class="container p-2">
            <div class="row">
                 <div class="col-lg-4 mb-4">
                     <div class="card">

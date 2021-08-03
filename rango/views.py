@@ -185,6 +185,9 @@ def add_page(request, category_name_slug):
 def restricted(request):
     return render(request, 'rango/restricted.html')
 
+def photo_gallery(request):
+    return render(request, 'rango/photo_gallery.html')
+
 '''def register(request):
 
     registered = False
