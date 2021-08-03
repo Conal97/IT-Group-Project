@@ -1,78 +1,64 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
-
 import django
 django.setup()
-from rango.models import Category, Page #this must be imported after lines 1-6
-
+from rango.models import Area, Munro 
 def populate():
 
-    python_pages = [
-        {'title' : 'Official Python Tutorial',
-        'url' : 'http://docs.python.org/3/tutorial/',
-        'views': 2000},
-
-        {'title' : 'How to Think like a Computer Scientist',
-        'url' : 'http://www.greenteapress.com/thinkpython/',
-        'views': 807},
-
-        {'title' : 'Learn Python in 10 Minutes',
-        'url' : 'http://www.korokithakis.net/tutorials/python/',
-        'views': 600},
+    fort_william_munros = [
+        {'name' : 'Ben Nevis',
+        'difficulty' : 3.9,
+        'elevation': 1345,
+        'coordinates': '56.7969° N, 5.0036° W'},
     ]
 
-    django_pages = [
-        {'title' : 'Official Django Tutorial',
-        'url' : 'http://docs.djangoproject.com/en/2.1/intro/tuttorial01/',
-        'views': 398},
+    cairngorms_munros = [
+        {'name' : 'Ben Macdui',
+        'difficulty' : 3.8,
+        'elevation': 1309,
+        'coordinates': '57.0704° N, 3.6691° W'},
 
-        {'title' : 'Django Rocks',
-        'url' : 'http://www.djangorocks.com/',
-        'views': 500},
-
-        {'title' : 'How to Tango with Django',
-        'url' : 'hhtp://www.tangowithdjango.com/',
-        'views': 50}
     ]
 
-    other_pages = [
-        {'title':'Bottle',
-        'url':'http://bottlepy.org/docs/dev',
-        'views': 123},
+    loch_lomond_munros = [
+        {'name' : 'Ben Lomond',
+        'difficulty' : 3.8,
+        'elevation': 974,
+        'coordinates': '56.7969° N, 5.0036° W'},
 
-        {'title':'Flask',
-        'url':'http://flask.pocoo.org',
-        'views': 200},
+        {'name' : 'Ben Vane',
+        'difficulty' : 3.7,
+        'elevation': 915,
+        'coordinates': '56.2499° N, 4.7817° W'},
     ]
 
-    cats = {'Python' : {'pages': python_pages, 'views': 128, 'likes': 64}, 
-            'Django' : {'pages': django_pages, 'views': 64, 'likes': 32},
-            'Other Frameworks' : {'pages': other_pages, 'views': 32, 'likes': 16},
+    areas = {'Fort William' : {'munros': fort_william_munros,}, 
+            'Cairngorms' : {'munros': cairngorms_munros,},
+            'Loch Lomond' : {'munros': loch_lomond_munros,},
             }
 
 
-    for cat, cat_data in cats.items():
-        c = add_cat(cat, views = cat_data['views'], likes = cat_data['likes'])
-        for p in cat_data['pages']:
-            add_page(c, p['title'], p['url'], views = p['views'])
+    for area, area_data in areas.items():
+        a = add_area(area)
+        for m in area_data['munros']:
+            add_munro(area, m['name'], m['difficulty'], m['elevation'], m['coordinates'],)
 
-    for c in Category.objects.all():
-        for p in Page.objects.filter(category=c):
-            print(f'- {c}: {p}')
+    for a in Area.objects.all():
+        for m in Munro.objects.filter(area=a):
+            print(f'- {a}: {m}')
 
-def add_page(cat, title, url, views):
-    p = Page.objects.get_or_create(category=cat, title=title)[0]
-    p.url=url
-    p.views=views
-    p.save()
-    return p
+def add_munro(area, name, diff, ele, coords):
+    m = Munro.objects.get_or_create(munroarea = area, name=name)[0]
+    m.difficulty = diff
+    m.elevation = ele
+    m.coordinates = coords
+    m.save()
+    return m
 
-def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name) [0]
-    c.views = views
-    c.likes = likes
-    c.save()
-    return c
+def add_area(name):
+    a = Area.objects.get_or_create(name=name) [0]
+    a.save()
+    return a
 
 if __name__=='__main__':
     print('Starting Rango Population Script...')
