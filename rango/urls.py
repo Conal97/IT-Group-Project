@@ -13,4 +13,8 @@ urlpatterns = [
     #path('login/', views.user_login, name='login'),
     #path('logout/', views.user_logout, name='logout'),
     path('restricted/', views.restricted, name='restricted'),
+    path('area/<slug:area_name_slug>/',
+        views.show_area, name='show_area'),
+    path('areas/', views.area, name='areas'),
+    path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
 ]

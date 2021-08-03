@@ -1,0 +1,20 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if area %} 
+    <h1>{{ area.name }}</h1> 
+    {% if munros %}
+    <ul>
+        {% for munro in munros %} 
+        <li><a href="{{ munro.url }}">{{ munro.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %} 
+    <strong>No munros currently in area.</strong>
+    {% endif %} 
+
+    {% else %}
+    The specified category does not exist
+    {% endif %}
+{% endblock %} 
