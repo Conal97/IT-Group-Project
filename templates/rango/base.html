@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <meta name="author" content="Edward Stace, William Croxon, Conal Brosnan and Elijiah Earl">
+        <meta name="author" content="Edward Stace, William Croxon, Conal Brosnan and Elijah Earl">
         <meta name="generator" content="Jekyll v3.8.5">
     <title>
         Rango - 
@@ -50,7 +50,6 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'rango:add_category' %}">Add Category</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'rango:areas' %}">Search By Area</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>
                             <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
@@ -63,7 +62,9 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                        {% block sidebar_block %} {% endblock %}
+                    {% block sidebar_block %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'rango:areas' %}">Search By Area</a></li> 
+                    {% endblock %}
                     </div>
                 </nav>
                 
