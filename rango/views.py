@@ -4,11 +4,33 @@ from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from rango.models import Category, Page
+from rango.models import Category, Page, Area, Munro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+
+
+def area(request):
+    area_list = Area.objects.order_by('name')
+    context_dict = {}
+    context_dict['areas'] = area_list
+    context_dict['prompt'] = 'Please select the area you would like to explore.'
+    return render(request, 'rango/areas.html', context=context_dict)
+
+def show_area(request, area_name_slug):
+    context_dict = {}
+
+    try:
+        area = Area.objects.get(slug=area_name_slug)
+        munros = Munro.objects.filter(area = area)
+        context_dict['munros'] = munros
+        context_dict['area'] = area
+    except Area.DoesNotExist: 
+        context_dict['area'] = None
+        context_dict['munros'] = None
+    
+    return render(request, 'rango/show_area.html', context=context_dict)
 
 #helper func
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -119,10 +141,12 @@ def add_page(request, category_name_slug):
 
     return render(request, 'rango/add_page.html', context = context_dict)
 
-def register(request):
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
 
+'''def register(request):
 
-    
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -151,9 +175,9 @@ def register(request):
     return render(request, 'rango/register.html',
                             context= {  'user_form': user_form,
                                         'profile_form': profile_form,
-                                        'registered': registered})
+                                        'registered': registered})'''
 
-def user_login(request): 
+'''def user_login(request): 
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -170,14 +194,9 @@ def user_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details provided")
     else:
-        return render(request, 'rango/user_login.html')
+        return render(request, 'rango/user_login.html')'''
 
-def user_logout(request):
+'''def user_logout(request):
     logout(request)
-    return redirect(reverse('rango:index'))
-
-@login_required
-def restricted(request):
-    return render(request, 'rango/restricted.html')
-
+    return redirect(reverse('rango:index'))'''
 

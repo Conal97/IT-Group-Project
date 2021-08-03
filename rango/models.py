@@ -7,7 +7,7 @@ Max_Length = 128
 
 class Area(models.Model):
     name = models.CharField(max_length=Max_Length, unique = True)
-
+    slug = models.SlugField()   
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Area, self).save(*args, **kwargs)
@@ -25,7 +25,7 @@ class Munro(models.Model):
     difficulty = models.IntegerField(default = 0)
     elevation = models.IntegerField(default = 0)
     coordinates = models.CharField(max_length = Max_Length, default = "")
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

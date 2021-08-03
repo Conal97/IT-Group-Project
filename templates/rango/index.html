@@ -26,7 +26,7 @@
         <ul>
         {%for munro in munros%}
             <li>
-                <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                <a href="/rango/area/{{ area.slug }}/">{{ area.name }}</a>
             </li>
         {% endfor %}
         </ul>

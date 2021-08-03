@@ -1,8 +1,8 @@
 from django import template
-from rango.models import Category
+from rango.models import Category, Area
 
 register = template.Library()
 
-@register.inclusion_tag('rango/categories.html')
-def get_category_list(current_category = None):
-    return {'categories': Category.objects.all(), 'current_category': current_category}
+@register.inclusion_tag('rango/areas.html')
+def get_area_list(current_area= None):
+    return {'areas': Area.objects.all(), 'current_category': current_area}
