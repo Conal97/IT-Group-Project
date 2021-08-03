@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.fields import CharField
-from rango.models import Page, Category, UserProfile
+from rango.models import Page, Category, UserProfile, Report
 from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
@@ -46,3 +46,13 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture',)
+
+
+class HikeReportForm(forms.ModelForm):
+    report_text = forms.CharField(max_length=3000,
+                            help_text='Enter your report here.')
+    difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
+
+    class Meta:
+        model = Report
+        fields = ('difficulty', 'report_text')

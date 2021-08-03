@@ -1,5 +1,5 @@
 from django.db.models.query import prefetch_related_objects
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, HikeReportForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
@@ -9,6 +9,33 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.utils import timezone
+
+def munro(request, munro_name_slug):
+    context_dict = {}
+    context_dict['details'] = "Details: "
+    context_dict['reviews'] = "View community hike reports here"
+    try:
+        munro = Munro.objects.get(slug=munro_name_slug)
+        context_dict['munro'] = munro
+    except Munro.DoesNotExist: 
+        context_dict['munro'] = None
+    return render(request, 'rango/munro.html', context=context_dict)
+
+
+@login_required
+def hike_report(request):
+    if request.method == "POST":
+        form = HikeReportForm(request.POST) 
+        if form.is_valid(): 
+            post = form.save(commit=False) 
+            post.date = timezone.now() 
+            post.author = request.user 
+            post.save() 
+            return redirect('/review') 
+    else: 
+         form=HikeReportForm() 
+    return render(request, 'rango/post_report.html', {'form': form}) 
 
 
 def area(request):
