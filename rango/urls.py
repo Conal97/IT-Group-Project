@@ -17,4 +17,5 @@ urlpatterns = [
         views.show_area, name='show_area'),
     path('areas/', views.area, name='areas'),
     path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
+    path('<slug:area_name_slug>/<slug:munro_name_slug>/', views.munro, name='munro')
 ]

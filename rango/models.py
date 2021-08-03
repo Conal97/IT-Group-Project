@@ -55,7 +55,7 @@ class Report(models.Model):
     munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
-    report_text = models.CharField
+    report_text = models.CharField(max_length = 3000)
 
     def __str__(self):
         return self.munro.name
