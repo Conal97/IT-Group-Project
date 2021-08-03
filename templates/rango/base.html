@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <meta name="author" content="Edward Stace, William Croxon, Conal Brosnan and Elijiah Earl">
+        <meta name="author" content="Edward Stace, William Croxon, Conal Brosnan and Elijah Earl">
         <meta name="generator" content="Jekyll v3.8.5">
     <title>
         Rango - 
@@ -24,12 +24,13 @@
      <!-- Custom styles for this template -->
      <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
     
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
      <!-- Custom CSS for given page-->
     {% block css %}  
     {% endblock %}
-    
-    <link rel="stylesheet" href="index.css">
-    
+   
     </head>
 
      <body>
@@ -51,7 +52,6 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'rango:add_category' %}">Add Category</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'rango:areas' %}">Search By Area</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>
                             <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
@@ -64,7 +64,17 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                        {% block sidebar_block %} {% endblock %}
+                    {% block sidebar_block %}
+                    {% endblock %}
+
+                    <div class="input-group col-12">
+                        <div class="form-outline col-9 pr-0">
+                          <input type="search" placeholder="search area" id="form1" class="form-control" />
+                          <!-- <label class="form-label" for="form1">Search</label> -->
+                        </div>
+                        <button type="button" class="btn btn-primary col-3 pl-0">
+                          <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </nav>
                 
@@ -95,6 +105,9 @@
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
+        <!-- Custom js for given page-->
+        {% block js %}  
+        {% endblock %}
     </body>
 </html> 
 
