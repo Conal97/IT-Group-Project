@@ -9,7 +9,8 @@ Max_Length = 128
 
 class Area(models.Model):
     name = models.CharField(max_length=Max_Length, unique = True)
-    slug = models.SlugField()   
+    slug = models.SlugField()  
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Area, self).save(*args, **kwargs)
@@ -21,13 +22,13 @@ class Area(models.Model):
         return self.name
 
 class Munro(models.Model):
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
     name = models.CharField(max_length = Max_Length, unique=True)
-    area = models.CharField(max_length = Max_Length, default = "")
     picture = models.ImageField(upload_to='Munro_Images', blank=True)
     difficulty = models.IntegerField(default = 0)
     elevation = models.IntegerField(default = 0)
     coordinates = models.CharField(max_length = Max_Length, default = "")
-    munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
+    #munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -58,9 +59,8 @@ class Report(models.Model):
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
-    difficulty = models.IntegerField(default = 0,
-                                    validators=[MaxValueValidator(10), MinValueValidator(1)])
-    date = models.DateTimeField(auto_now_add=True)
+    difficulty = models.IntegerField(default = 0, validators=[MaxValueValidator(10), MinValueValidator(1)])
+    #date = models.DateTimeField(null=True, blank=True)
 
 
     def __str__(self):
