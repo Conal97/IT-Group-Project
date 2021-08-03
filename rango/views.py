@@ -59,7 +59,7 @@ def index(request):
     pages_list = Page.objects.order_by('-views')[:5]
 
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['pageheading'] = 'Rango'
     context_dict['categories'] = category_list
     context_dict['pages'] = pages_list
     
