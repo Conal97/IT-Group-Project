@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block css %}  
-<link rel="stylesheet" type="text/css" href="{% static 'CSS/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block body_block %}
@@ -49,6 +49,9 @@
     {% endif %}
     </div>
 
+{% endblock %}
 
+{% block js %}  
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 
