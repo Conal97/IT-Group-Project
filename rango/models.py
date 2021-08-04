@@ -30,6 +30,9 @@ class Munro(models.Model):
     elevation = models.IntegerField(default = 0)
     coordinates = models.CharField(max_length = Max_Length, default = "")
     description = models.CharField(max_length = 2048, default = "")
+    image_1 = models.CharField(max_length = Max_Length, unique=True)
+    image_2 = models.CharField(max_length = Max_Length, unique=True)
+    image_3 = models.CharField(max_length = Max_Length, unique=True)
     #munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
