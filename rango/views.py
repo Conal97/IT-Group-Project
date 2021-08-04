@@ -89,13 +89,15 @@ def show_area(request, area_name_slug):
     try:
         area = Area.objects.get(slug=area_name_slug)
         munros = Munro.objects.filter(area = area)
+        context_dict['pageheading'] = area
         context_dict['munros'] = munros
         context_dict['area'] = area
-    except Area.DoesNotExist: 
+    except Area.DoesNotExist:
+        context_dict['pageheading'] = None 
         context_dict['area'] = None
         context_dict['munros'] = None
     
-    return render(request, 'rango/show_area.html', context=context_dict)
+    return render(request, 'rango/area.html', context=context_dict)
 
 #helper func
 def visitor_cookie_handler(request):
