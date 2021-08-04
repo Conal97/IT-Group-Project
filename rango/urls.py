@@ -13,7 +13,9 @@ urlpatterns = [
     path('areas/', views.area, name='areas'),
     path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
     path('search', views.search, name='search'),
+    path('search_munros', views.search_munros, name='search_munros'),
     path('photo_gallery/', views.photo_gallery, name='photo_gallery'),
+    path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
     path('search_munros/', views.search_munros, name='search_munros'),
     path('munros/<slug:munro_name_slug>/', views.show_munro, name='show_munro'),
 ]

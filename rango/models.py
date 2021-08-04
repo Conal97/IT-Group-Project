@@ -47,7 +47,7 @@ class Munro(models.Model):
         
 class Hiker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bagged = models.CharField(max_length = Max_Length, default = "")
+    bagged = models.CharField(max_length = Max_Length, blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     verified = models.BooleanField(default=False)
 
