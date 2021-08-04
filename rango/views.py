@@ -1,15 +1,19 @@
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
-from rango.forms import HikeReportForm
+from rango.forms import HikeReportForm, HikerProfileForm, UserProfileForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Munro
+from rango.models import Area, Hiker, Munro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
+from rango.models import UserProfile
+from django.utils.decorators import method_decorator
+from django.views import View
 
 def index(request):
     #dictionary used to pass into template as context()
@@ -110,6 +114,55 @@ def search_munros(request):
     
     else:
         return render(request, 'rango/search_munros.html', {})
+
+
+class ProfileView(View):
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+        
+        hiker_profile = Hiker.objects.get_or_create(user=user)[0]
+        form = HikerProfileForm({'bagged': hiker_profile.bagged,
+                                'picture': hiker_profile.picture})
+        
+        return (user, hiker_profile, form)
+    
+    @method_decorator(login_required)
+    def get(self, request, username):
+        try:
+            (user, hiker_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('rango:index'))
+        
+        context_dict = {'hiker_profile': hiker_profile,
+                        'selected_user': user,
+                        'form': form}
+        
+        return render(request, 'rango/profile.html', context_dict)
+    
+    @method_decorator(login_required)
+    def post(self, request, username):
+        try:
+            (user, hiker_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('rango:index'))
+        
+        form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse('rango:profile',
+                                    kwargs={'username': username}))
+        else:
+            print(form.errors)
+        
+        context_dict = {'hiker_profile': hiker_profile,
+                        'selected_user': user,
+                        'form': form}
+        
+        return render(request, 'rango/profile.html', context_dict)
 
 #helper func
 def visitor_cookie_handler(request):
