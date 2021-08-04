@@ -1,0 +1,16 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if munro %}
+        {{ munro.name }}
+    {% else %}
+        Unknown Munro
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    <div class="p-2">
+        <p class="card-text">{{ munro.name }} </p>
+    </div>
+{% endblock %} 

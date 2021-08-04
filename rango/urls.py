@@ -15,4 +15,5 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('photo_gallery/', views.photo_gallery, name='photo_gallery'),
     path('search_munros/', views.search_munros, name='search_munros'),
+    path('munros/<slug:munro_name_slug>/', views.show_munro, name='show_munro'),
 ]

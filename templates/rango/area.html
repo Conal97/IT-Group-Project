@@ -17,7 +17,7 @@
     {% if munros %}
     <ul>
         {% for munro in munros %} 
-        <li><a href="{{ munro.url }}">{{ munro.name }}</a></li>
+        <li><a href="{% url 'rango:show_munro' munro.slug %}">{{ munro.name }}</a></li>
         {% endfor %}
     </ul>
     {% else %} 

@@ -22,6 +22,7 @@ class Area(models.Model):
         return self.name
 
 class Munro(models.Model):
+    slug = models.SlugField()
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     name = models.CharField(max_length = Max_Length, unique=True)
     picture = models.ImageField(upload_to='Munro_Images', blank=True)
