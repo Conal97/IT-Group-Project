@@ -28,6 +28,7 @@ class Munro(models.Model):
     difficulty = models.IntegerField(default = 0)
     elevation = models.IntegerField(default = 0)
     coordinates = models.CharField(max_length = Max_Length, default = "")
+    description = models.CharField(max_length = 2048, default = "")
     #munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
