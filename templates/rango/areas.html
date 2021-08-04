@@ -8,7 +8,7 @@
                             <span data-feather="archive"></span>{{ a.name }}
                         </a>
                     </li>
-                    {% else %}
+                {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'rango:show_area' a.slug %}">
                                 <span data-feather="compass"></span>{{ a.name }}

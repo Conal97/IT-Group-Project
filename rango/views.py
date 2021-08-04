@@ -1,11 +1,10 @@
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, HikeReportForm
+from rango.forms import HikeReportForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from rango.models import Category, Page, Area, Munro
+from rango.models import Area, Munro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -14,13 +13,13 @@ from django.utils import timezone
 
 def index(request):
     #dictionary used to pass into template as context()
-    category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = Page.objects.order_by('-views')[:5]
+    area_list = Area.objects.all() #.order_by('-likes')[:5]
+    munro_list = Munro.objects.all() #.order_by('-views')[:5]
 
     context_dict = {}
     context_dict['pageheading'] = 'Rango'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = pages_list
+    context_dict['areas'] = area_list
+    context_dict['munros'] = munro_list
     
     visitor_cookie_handler(request)
 

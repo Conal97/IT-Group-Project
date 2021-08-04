@@ -67,7 +67,7 @@
 
     <div class="container">
         <div class="row">
-            
+
             <div class="col-md-6">
                 <div class="card mb-6">
                     <div class="card-body">
@@ -75,8 +75,8 @@
                         <p class="card-text">
                         {% if areas %}
                             <ul class="list-group">
-                                {% for area in areas %}
-                                    <li class="list-group-item"><a href="{% url 'rango:show_area' area.slug %}">{{ area.name }}</a></li class="list-group-item">
+                                {% for a in areas %}
+                                    <li class="list-group-item"><a href="{% url 'rango:show_area' a.slug %}">{{ a.name }}</a></li class="list-group-item">
                                 {% endfor %}
                             </ul>
                         {% else %}
