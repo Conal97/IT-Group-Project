@@ -52,7 +52,7 @@
 
                 <div class="col-lg-4 mb-4">
                     <div class="card">
-                        <img class="card-img-top" src="/static/images/benNevis.jpg" alt="">
+                        <img class="card-img-top" src="/static/images/Ben_Nevis_1.jpg" alt="">
                         <div class="card-body">
                             <h5 class="card-title">Ben Nevis</h5>
                             <p class="card-text">At 1345 metres of elevation, Ben Nevis is the highest point in the entire of the UK, close to the twon of Fort William.</p>
@@ -96,7 +96,7 @@
                         {% if munros %}
                             <ul class="list-group">
                                 {% for munro in munros %}
-                                    <li class="list-group-item"><a href="{{munro.url}}">{{ munro.name }}</a></li>
+                                    <li class="list-group-item"><a href="{% url 'rango:show_munro' munro.slug %}">{{ munro.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         {% else %}
