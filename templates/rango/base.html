@@ -65,24 +65,17 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                    {% block sidebar_block %}
-                    {% endblock %}
-
                     <div class="input-group col-12">
                         <div class="form-outline col-9 pr-0">
                           <input type="search" placeholder="search area" id="form1" class="form-control" />
-                          <!-- <label class="form-label" for="form1">Search</label> -->
                         </div>
                         <button type="button" class="btn btn-primary col-3 pl-0">
                           <i class="fas fa-search"></i>
                         </button>
                     </div>
-
-                    {%for munro in munros%}
-                        <li>
-                            <a href="/rango/area/{{ area.slug }}/">{{ area.name }}</a>
-                        </li>
-                    {% endfor %}
+                    {% block sidebar_block %}
+                        {% get_area_list areas %}
+                    {% endblock %}
                 </nav>
                 
                 <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		

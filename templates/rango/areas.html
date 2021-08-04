@@ -1,19 +1,23 @@
-{% extends 'rango/base.html' %}
-{% load staticfiles %}
-
-{% block body_block %}
-<h1>{{prompt}}</h1>
-    {% if areas %}
-    <ul>
-        {% for area in areas %} 
-        <li><a href="{{ area.url }}">{{ area.name }}</a></li>
-        {% endfor %}
+<div>
+    <ul class="nav flex-column">
+        {% if areas %}
+            {% for a in areas %}
+                {% if a == current_area %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'rango:show_area' a.slug %}">
+                            <span data-feather="archive"></span>{{ a.name }}
+                        </a>
+                    </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'rango:show_area' a.slug %}">
+                                <span data-feather="archive"></span>{{ a.name }}
+                            </a>
+                        </li>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <li class="nav-item">There are no areas present.</li>
+        {% endif %}
     </ul>
-    {% else %} 
-    <strong>No areas exist, the map is a lie.</strong>
-    {% endif %} 
-    <div>
-        <img src="{% static 'images/compass.jpg'%}"
-        alt = "Man with Compass" />
-    </div>
-{% endblock %}
+</div>

@@ -72,10 +72,10 @@
                     <div class="card-body">
                         <h2>Most Liked Munros</h2>
                         <p class="card-text">
-                        {% if categories %}
+                        {% if munro %}
                         <ul class="list-group">
                         {% for munro in munros %}
-                            <li class="list-group-item"><a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a></li>
+                            <li class="list-group-item"><a href="{{munro.url}}">{{ munro.name }}</a></li>
                         {% endfor %}
                         </ul>
                         {% else %}
