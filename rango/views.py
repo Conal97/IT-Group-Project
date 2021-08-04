@@ -99,6 +99,18 @@ def show_area(request, area_name_slug):
     
     return render(request, 'rango/area.html', context=context_dict)
 
+def search_munros(request):
+
+    if request.method == "POST":
+
+        searched = request.POST['searched']
+        munros = Munro.objects.filter(name__contains=searched)
+
+        return render(request, 'rango/search_munros.html', {'searched':searched, 'munros': munros})
+    
+    else:
+        return render(request, 'rango/search_munros.html', {})
+
 #helper func
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))

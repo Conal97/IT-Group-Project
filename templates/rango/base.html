@@ -56,6 +56,14 @@
                             <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
                     </ul>
+
+                    <form class="d-flex" method=POST action ="{% url 'rango:search_munros' %}"> 
+
+                        {% csrf_token %}
+
+                        <input class="form-control me-2" type="search" placeholder="Search for a Munro" aria-label="Search" name="searched">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
                 </div>
             </nav>
         </header>

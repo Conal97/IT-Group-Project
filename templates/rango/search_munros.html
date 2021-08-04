@@ -1,0 +1,30 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Search Munros
+{% endblock %}
+
+{% block body_block %}
+
+    <center>
+        {% if searched %}
+            <h3> You searched for: {{ searched }}</h3>
+            <br/>
+
+            {% if munros %}
+                {% for munro in munros %}
+                    <a href="{{ munro.url }}">{{ munro.name }}</a> <br/>
+                    <!-- to do: link to munro page (require munros.html) -->
+                {% endfor %}
+            {% else %}
+                <h3><a href="{% url 'rango:search' %}"> Munro not found, search the web instead!</a></h3>
+            {% endif %}
+
+        {% else %}
+            <h3> You didn't enter a search term</h3>
+        {% endif %}
+       
+    </center>
+
+{% endblock %}
