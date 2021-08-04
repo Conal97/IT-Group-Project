@@ -10,12 +10,6 @@ urlpatterns = [
     #path('login/', views.user_login, name='login'),
     #path('logout/', views.user_logout, name='logout'),
     path('restricted/', views.restricted, name='restricted'),
-<<<<<<< HEAD
-    path('oauth/', include('social_django.urls', namespace='social')),
-    path('area/<slug:area_name_slug>/',
-        views.show_area, name='show_area'),
-=======
->>>>>>> 6e43d4163526a8c6be6a6c22fe27b6cbc31c2cab
     path('areas/', views.area, name='areas'),
     path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
     path('search', views.search, name='search'),
