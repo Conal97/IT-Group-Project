@@ -67,38 +67,39 @@
 
     <div class="container">
         <div class="row">
+
             <div class="col-md-6">
                 <div class="card mb-6">
                     <div class="card-body">
-                        <h2>Most Liked Munros</h2>
+                        <h2>Most Liked Areas</h2>
                         <p class="card-text">
-                        {% if categories %}
-                        <ul class="list-group">
-                        {% for munro in munros %}
-                            <li class="list-group-item"><a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a></li>
-                        {% endfor %}
-                        </ul>
+                        {% if areas %}
+                            <ul class="list-group">
+                                {% for a in areas %}
+                                    <li class="list-group-item"><a href="{% url 'rango:show_area' a.slug %}">{{ a.name }}</a></li class="list-group-item">
+                                {% endfor %}
+                            </ul>
                         {% else %}
-                        <strong>There are no munros present.</strong>
+                            <strong>There are no areas present.</strong>
                         {% endif %}
                         </p>
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-6">
                 <div class="card mb-6">
                     <div class="card-body">
-                        <h2>Most Liked Photos</h2>
+                        <h2>Most Liked Munros</h2>
                         <p class="card-text">
-                        {% if pages %}
-                        <ul class="list-group">
-                        {% for photo in phtots %}
-                            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li class="list-group-item">
-                        {% endfor %}
-                        </ul>
+                        {% if munros %}
+                            <ul class="list-group">
+                                {% for munro in munros %}
+                                    <li class="list-group-item"><a href="{{munro.url}}">{{ munro.name }}</a></li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
-                        <strong>There are no photos present.</strong>
+                            <strong>There are no munros present.</strong>
                         {% endif %}
                         </p>
                     </div>

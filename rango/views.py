@@ -1,16 +1,54 @@
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, HikeReportForm
+from rango.forms import HikeReportForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from rango.models import Category, Page, Area, Munro
+from rango.models import Area, Munro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils import timezone
+
+def index(request):
+    #dictionary used to pass into template as context()
+    area_list = Area.objects.all() #.order_by('-likes')[:5]
+    munro_list = Munro.objects.all() #.order_by('-views')[:5]
+
+    context_dict = {}
+    context_dict['pageheading'] = 'Rango'
+    context_dict['areas'] = area_list
+    context_dict['munros'] = munro_list
+    
+    visitor_cookie_handler(request)
+
+    response = render(request, 'rango/index.html', context=context_dict)
+    return response
+
+def about(request):
+    context_dict = {'pageheading': 'About Rango'}
+    return render(request, 'rango/about.html', context=context_dict)
+
+def search(request):
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Use the bing search function
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list':result_list})
+
+def photo_gallery(request):
+    context_dict = {'pageheading': 'Photo Gallery'}
+    return render(request, 'rango/photo_gallery.html', context = context_dict)
+
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
 
 def munro(request, munro_name_slug):
     context_dict = {}
@@ -51,20 +89,15 @@ def show_area(request, area_name_slug):
     try:
         area = Area.objects.get(slug=area_name_slug)
         munros = Munro.objects.filter(area = area)
+        context_dict['pageheading'] = area
         context_dict['munros'] = munros
         context_dict['area'] = area
-    except Area.DoesNotExist: 
+    except Area.DoesNotExist:
+        context_dict['pageheading'] = None 
         context_dict['area'] = None
         context_dict['munros'] = None
     
-    return render(request, 'rango/show_area.html', context=context_dict)
-
-#helper func
-def get_server_side_cookie(request, cookie, default_val=None):
-    val=request.session.get(cookie)
-    if not val:
-        val = default_val
-    return val
+    return render(request, 'rango/area.html', context=context_dict)
 
 #helper func
 def visitor_cookie_handler(request):
@@ -80,113 +113,12 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
-def index(request):
-    #dictionary used to pass into template as context()
-    category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = Page.objects.order_by('-views')[:5]
-
-    context_dict = {}
-    context_dict['pageheading'] = 'Rango'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = pages_list
-    
-    visitor_cookie_handler(request)
-
-    response = render(request, 'rango/index.html', context=context_dict)
-    return response
-
-def about(request):
-    context_dict = {'pageheading': 'About Rango'}
-    return render(request, 'rango/about.html', context=context_dict)
-
-def search(request):
-    result_list = []
-
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-
-        if query:
-            # Use the bing search function
-            result_list = run_query(query)
-
-    return render(request, 'rango/search.html', {'result_list':result_list})
-
-
-def show_category(request, category_name_slug):
-    #create a context dictionary(will be passed to html file)
-    context_dict = {}
-
-    try:
-        #try to find category name slug with given name(prameter passed)
-        category = Category.objects.get(slug=category_name_slug)
-
-        #retrieve all pages associated
-        pages = Page.objects.filter(category = category)
-        
-        #add these pages to the dictionary
-        context_dict['pages'] = pages
-
-        #this used to verify category exists
-        context_dict['category'] = category
-    except Category.DoesNotExist: #throw exception if no such category
-        #avoid doing anything, disaply no category message
-        context_dict['category'] = None
-        context_dict['pages'] = None
-    
-    return render(request, 'rango/category.html', context=context_dict)
-
-@login_required
-def add_category(request):
-    form = CategoryForm()
-
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse('rango:index'))
-        
-        else: print (form.errors)
-
-    return render(request, 'rango/add_category.html', {'form': form})
-
-@login_required
-def add_page(request, category_name_slug):
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-    except:
-        category = None
-
-    if category is None:
-        return redirect(reverse('rango:index'))
-
-    form = PageForm()
-
-    if request.method == 'POST':
-        form = PageForm(request.POST)
-
-        if form.is_valid():
-            if category:
-                page = form.save(commit=False)
-                page.category = category
-                page.views = 0
-                page.save()
-                print("HERE")
-                return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
-            else:
-                print(form.error)
-
-    context_dict = {'form' : form, 'category': category}
-
-    return render(request, 'rango/add_page.html', context = context_dict)
-
-@login_required
-def restricted(request):
-    return render(request, 'rango/restricted.html')
-
-def photo_gallery(request):
-    context_dict = {'pageheading': 'Photo Gallery'}
-    return render(request, 'rango/photo_gallery.html', context = context_dict)
+#helper func
+def get_server_side_cookie(request, cookie, default_val=None):
+    val=request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
 
 '''def register(request):
 
