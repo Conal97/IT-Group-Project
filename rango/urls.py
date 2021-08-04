@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from rango import views
 
 app_name = 'rango'
@@ -13,6 +13,7 @@ urlpatterns = [
     #path('login/', views.user_login, name='login'),
     #path('logout/', views.user_logout, name='logout'),
     path('restricted/', views.restricted, name='restricted'),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('area/<slug:area_name_slug>/',
         views.show_area, name='show_area'),
     path('areas/', views.area, name='areas'),
