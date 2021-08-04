@@ -103,6 +103,19 @@ def show_area(request, area_name_slug):
     
     return render(request, 'rango/area.html', context=context_dict)
 
+def show_munro(request, munro_name_slug):
+    context_dict = {}
+
+    try:
+        munro = Munro.objects.get(slug = munro_name_slug)
+        context_dict['pageheading'] = munro
+        context_dict['munro'] = munro
+    except Munro.DoesNotExist:
+        context_dict['pageheading'] = None
+        context_dict['munro'] = None 
+    
+    return render(request, 'rango/munro.html', context=context_dict)
+
 def search_munros(request):
 
     if request.method == "POST":
