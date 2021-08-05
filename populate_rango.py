@@ -25,7 +25,7 @@ def populate():
         'coordinates': '57.0704° N, 3.6691° W',
         'duration' : '6 - 7 hours',
         'length' : 17.5,
-        'description': 'Ben Macdui Generic description',
+        'description': 'Ben Macdui is the second highest mountain in Scotland (and all of the British Isles) after Ben Nevis, and the highest in the Cairngorm Mountains and the wider Cairngorms National Park. The summit elevation is 1,309 metres. Ben Macdui lies on the southern edge of the Cairngorm plateau, on the boundary between the historic counties of Aberdeenshire and Banffshire.',
         }
     ]
 
@@ -36,7 +36,7 @@ def populate():
         'coordinates': '56.7969° N, 5.0036° W',
         'duration' : '4.5 - 5.5 hours',
         'length' : 12,
-        'description': 'Ben Lomond Generic description',
+        'description': 'Ben Lomonond is situated on the eastern shore of Loch Lomond, it is the most southerly of the Munros. Ben Lomond lies within the Ben Lomond National Memorial Park and the Loch Lomond and The Trossachs National Park, property of the National Trust for Scotland.Its accessibility from Glasgow and elsewhere in central Scotland, together with the relative ease of ascent from Rowardennan, makes it one of the most popular of all the Munros.',
         },
 
         {'name' : 'Ben Vane',
@@ -45,7 +45,7 @@ def populate():
         'coordinates': '56.2499° N, 4.7817° W',
         'duration' : '4.5 - 6.5 hours',
         'length' : 11,
-        'description': 'Ben Vane Generic description',
+        'description': 'Ben Vane is situated in the southern Highlands. It is one of the Arrochar Alps and stands slightly separate from the other mountains of the group being connected on its western side to the neighbouring Beinn Ìme. Ben Vane itself just qualifies as a Munro reaching a height of 915 metresand is characterised by steep and rugged slopes which fall away to the Inveruglas Water to the east and the Allt Coiregroigan to the south.',
         }
     ]
 
@@ -71,54 +71,54 @@ def populate():
     ]
 
     ben_macdui_images = [
-        {'name' : 'Ben_Nevis_1.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'First Ben Nevis pic',
+        {'name' : 'Ben_Macdui_1.jpeg',
+        'title' : 'Ben Macdui',
+        'description' : 'First Ben Macdui pic',
         },
 
-        {'name' : 'Ben_Nevis_2.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Second Ben Nevis pic',
+        {'name' : 'Ben_Macdui_2.jpg',
+        'title' : 'Ben Macdui',
+        'description' : 'Second Ben Macdui pic',
         },
 
-        {'name' : 'Ben_Nevis_3.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Third Ben Nevis pic',
+        {'name' : 'Ben_Macdui_3.jpg',
+        'title' : 'Ben Macdui',
+        'description' : 'Third Ben Macdui pic',
         },
     ]
 
 
     ben_lomond_images = [
-        {'name' : 'Ben_Nevis_1.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'First Ben Nevis pic',
+        {'name' : 'Ben_Lomond_1.jpg',
+        'title' : 'Ben lomond',
+        'description' : 'First Ben lomond pic',
         },
 
-        {'name' : 'Ben_Nevis_2.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Second Ben Nevis pic',
+        {'name' : 'Ben_Lomond_2.jpg',
+        'title' : 'Ben lomond',
+        'description' : 'Second Ben lomond pic',
         },
 
-        {'name' : 'Ben_Nevis_3.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Third Ben Nevis pic',
+        {'name' : 'Ben_Lomond_3.jpg',
+        'title' : 'Ben lomond',
+        'description' : 'Third Ben lomond pic',
         },
     ]
 
     ben_vane_images = [
-        {'name' : 'Ben_Nevis_1.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'First Ben Nevis pic',
+        {'name' : 'Ben_Vane_1.jpg',
+        'title' : 'Ben vane',
+        'description' : 'First Ben vane pic',
         },
 
-        {'name' : 'Ben_Nevis_2.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Second Ben Nevis pic',
+        {'name' : 'Ben_Vane_2.jpg',
+        'title' : 'Ben vane',
+        'description' : 'Second Ben vane pic',
         },
 
-        {'name' : 'Ben_Nevis_3.jpg',
-        'title' : 'Ben Nevis',
-        'description' : 'Third Ben Nevis pic',
+        {'name' : 'Ben_Vanes_3.jpg',
+        'title' : 'Ben vane',
+        'description' : 'Third Ben vane pic',
         },
     ]
 
