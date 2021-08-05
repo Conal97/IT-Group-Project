@@ -55,7 +55,7 @@
                 {% csrf_token %}
                 {% for field in bagged_form %}
                     {{ field }}
-                    {{ field.auto_id}}
+                    {{ field.auto_id }}
                 {% endfor %}
                 <input type="submit" value="Update bagged munros" name = "Update Bagged" />
             </form>
