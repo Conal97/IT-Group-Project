@@ -38,7 +38,6 @@
     <div>
     </div id = "bagged">
         
-        <br/>
 
         {% if selected_user == user %}  
 
@@ -47,7 +46,7 @@
             <select id="munros" name="munro">
 
             {% for munro in munros %}
-            <option value = "{{ munro }}"> {{ munro }}</option>
+                <option value = "{{ munro }}"> {{ munro }}</option>
             {% endfor %}
 
 
