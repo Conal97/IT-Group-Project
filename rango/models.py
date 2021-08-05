@@ -9,7 +9,9 @@ Max_Length = 128
 
 class Area(models.Model):
     name = models.CharField(max_length=Max_Length, unique = True)
-    slug = models.SlugField()  
+    slug = models.SlugField()
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)  
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -22,18 +24,17 @@ class Area(models.Model):
         return self.name
 
 class Munro(models.Model):
-    slug = models.SlugField()
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     name = models.CharField(max_length = Max_Length, unique=True)
-    picture = models.ImageField(upload_to='Munro_Images', blank=True)
+    slug = models.SlugField()
     difficulty = models.IntegerField(default = 0)
     elevation = models.IntegerField(default = 0)
     coordinates = models.CharField(max_length = Max_Length, default = "")
+    duration = models.CharField(max_length = 2048, default = "")
+    length = models.IntegerField(default = 0)
     description = models.CharField(max_length = 2048, default = "")
-    image_1 = models.CharField(max_length = Max_Length, unique=True)
-    image_2 = models.CharField(max_length = Max_Length, unique=True)
-    image_3 = models.CharField(max_length = Max_Length, unique=True)
-    #munroarea = models.ForeignKey(Area, on_delete=models.CASCADE)
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -54,6 +55,23 @@ class BaggedMunros(models.Model):
 
     def __str__(self):
         return self.munro.name
+        
+class Image(models.Model):
+    name = models.CharField(max_length = 200)
+    title = models.CharField(max_length = 200, default = "")
+    description = models.CharField(max_length = 2048, default = "")
+    munro = models.ForeignKey(Munro, related_name='images', on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        super(Image, self).save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name_plural='Images'
+
+    def __str__(self):
+        return self.name
+ 
         
 class Hiker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

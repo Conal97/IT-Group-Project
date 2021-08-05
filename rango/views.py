@@ -17,8 +17,8 @@ from django.views import View
 
 def index(request):
     #dictionary used to pass into template as context()
-    area_list = Area.objects.all() #.order_by('-likes')[:5]
-    munro_list = Munro.objects.all() #.order_by('-views')[:5]
+    area_list = Area.objects.all().order_by('-likes')[:3]
+    munro_list = Munro.objects.all().order_by('-likes')[:3]
 
     context_dict = {}
     context_dict['pageheading'] = 'Rango'
@@ -108,11 +108,14 @@ def show_munro(request, munro_name_slug):
 
     try:
         munro = Munro.objects.get(slug = munro_name_slug)
+        images = munro.images.all()
         context_dict['pageheading'] = munro
         context_dict['munro'] = munro
+        context_dict['images'] = images
     except Munro.DoesNotExist:
         context_dict['pageheading'] = None
-        context_dict['munro'] = None 
+        context_dict['munro'] = None
+        context_dict['images'] = None 
     
     return render(request, 'rango/munro.html', context=context_dict)
 
@@ -128,6 +131,29 @@ def search_munros(request):
     else:
         return render(request, 'rango/search_munros.html', {})
 
+# URL tracking view - to keep track of clicks
+def goto_url(request):
+    if request.method == 'GET':
+        page_name = request.GET.get('page_name')
+        try:
+            selected_page = Munro.objects.get(slug=page_name)
+            url = '/rango/munros/' + selected_page.slug
+        except Munro.DoesNotExist:
+            try:
+                selected_page = Area.objects.get(slug=page_name)
+                url = '/rango/area/' + selected_page.slug
+            except Area.DoesNotExist:
+                return redirect(reverse('rango:index'))
+        
+        print(selected_page)
+        selected_page.views = selected_page.views + 1
+        
+        selected_page.save()
+        
+        return redirect(url)
+
+    else:
+        return redirect(reverse('rango:index')) 
 
 class ProfileView(View):
     def get_user_details(self, username):
