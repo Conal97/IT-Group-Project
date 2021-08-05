@@ -38,28 +38,41 @@
     <div>
     </div id = "bagged">
         
-        <br/>
 
         {% if selected_user == user %}  
-        <form method="post" action="." >
-            {% csrf_token %}
-            {{ bagged_form.as_p }}
 
-            <input type="submit" value="Update bagged munros" name = "Update Bagged" />
-        </form>
 
-        <br>
+            <label for="Munros">Bag a munro:</label>
+            <select id="munros" name="munro">
 
-        <p>
-            <strong>Tracker: </strong>
-            {{ hiker_profile.bagged }}
-        </p>
-        
-        {% else %}
-        <p>
-            <strong>Tracker: </strong>
-            {{ hiker_profile.bagged }}
-        </p>
+            {% for munro in munros %}
+                <option value = "{{ munro }}"> {{ munro }}</option>
+            {% endfor %}
+
+
+            </select>
+
+
+
+            <form method="post" action="." >
+                {% csrf_token %}
+                {{ bagged_form.as_p }}
+
+                <input type="submit" value="Update bagged munros" name = "Update Bagged" />
+            </form>
+
+            <br>
+
+            <p>
+                <strong>Tracker: </strong>
+                {{ hiker_profile.bagged }}
+            </p>
+            
+            {% else %}
+            <p>
+                <strong>Tracker: </strong>
+                {{ hiker_profile.bagged }}
+            </p>
         {% endif %}
 
     </div>

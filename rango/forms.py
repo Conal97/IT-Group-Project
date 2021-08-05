@@ -1,13 +1,9 @@
 from django import forms
 from django.forms import fields
 from django.forms.fields import CharField
-from rango.models import BaggedMunros, Hiker, UserProfile, Report
+from rango.models import BaggedMunros, Hiker, Report
 from django.contrib.auth.models import User
 
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture',)
 
 class HikerProfileForm(forms.ModelForm):
     class Meta:
@@ -68,16 +64,6 @@ class PageForm(forms.ModelForm):
 
             return cleaned_data'''
 
-
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture',)
-
-class HikerProfileForm(forms.ModelForm):
-    class Meta:
-        model = Hiker
-        fields = ('bagged', 'picture')
 
 
 class HikeReportForm(forms.ModelForm):
