@@ -24,10 +24,10 @@ def populate():
         'difficulty' : 2,
         'elevation': 1309,
         'coordinates': '57.0704° N, 3.6691° W',
-        'description': 'Generic description',
-        'image_1' : 'Ben_Macdui_1.jpg',
-        'image_2' : 'Ben_Macdui_2.jpg',
-        'image_3' : 'Ben_Macdui_3.jpg',
+        'description': 'Ben Macdui is the second highest mountain in Scotland (and all of the British Isles) after Ben Nevis, and the highest in the Cairngorm Mountains and the wider Cairngorms National Park. The summit elevation is 1,309 metres. Ben Macdui lies on the southern edge of the Cairngorm plateau, on the boundary between the historic counties of Aberdeenshire and Banffshire.',
+        'image_1' : 'Ben_Macdui_1.jpeg',
+        'image_2' : 'Ben_Macdui_2.jpeg',
+        'image_3' : 'Ben_Macdui_3.jpeg',
         }
     ]
 
@@ -36,7 +36,7 @@ def populate():
         'difficulty' : 5,
         'elevation': 974,
         'coordinates': '56.7969° N, 5.0036° W',
-        'description': 'Generic description',
+        'description': 'Ben Lomonond is situated on the eastern shore of Loch Lomond, it is the most southerly of the Munros. Ben Lomond lies within the Ben Lomond National Memorial Park and the Loch Lomond and The Trossachs National Park, property of the National Trust for Scotland.Its accessibility from Glasgow and elsewhere in central Scotland, together with the relative ease of ascent from Rowardennan, makes it one of the most popular of all the Munros.',
         'image_1' : 'Ben_Lomond_1.jpg',
         'image_2' : 'Ben_Lomond_2.jpg',
         'image_3' : 'Ben_Lomond_3.jpg',
@@ -46,7 +46,7 @@ def populate():
         'difficulty' : 4,
         'elevation': 915,
         'coordinates': '56.2499° N, 4.7817° W',
-        'description': 'Generic description',
+        'description': 'Ben Vane is situated in the southern Highlands. It is one of the Arrochar Alps and stands slightly separate from the other mountains of the group being connected on its western side to the neighbouring Beinn Ìme. Ben Vane itself just qualifies as a Munro reaching a height of 915 metresand is characterised by steep and rugged slopes which fall away to the Inveruglas Water to the east and the Allt Coiregroigan to the south.',
         'image_1' : 'Ben_Vane_1.jpg',
         'image_2' : 'Ben_Vane_2.jpg',
         'image_3' : 'Ben_Vane_3.jpg',
