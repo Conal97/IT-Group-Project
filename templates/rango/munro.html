@@ -47,11 +47,13 @@
            <div class="row">
                 {% if images %}
                     {% for image in images %} 
-                        <div class="col-lg-4 mb-4">
-                            <div class="card">
-                                <img class="card-img-top" src="/static/images/{{ image.name }}" alt="">
+                        {% if image.munro == munro %}
+                            <div class="col-lg-4 mb-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="/static/images/{{ image.name }}" alt="">
+                                </div>
                             </div>
-                        </div>
+                        {% endif %} 
                     {% endfor %}
                 {% else %} 
                     <strong>No images currently in munro.</strong>
