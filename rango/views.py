@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from rango.models import UserProfile
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
     #dictionary used to pass into template as context()
@@ -75,7 +75,8 @@ def hike_report(request):
             post.date = timezone.now() 
             post.author = request.user 
             post.save() 
-            return redirect('/index/') 
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
     else: 
          form=HikeReportForm() 
     return render(request, 'rango/post_report.html', {'form': form}) 
@@ -132,26 +133,6 @@ def search_munros(request):
     else:
         return render(request, 'rango/search_munros.html', {})
 
-def goto_url(request):
-
-    if request.method == 'Get':
-        page_name = request.GET.get('page_name')
-        try:
-            selected_page = Munro.objects.get(slug=page_name)
-            url = '/rango/munros/' + selected_page.slug
-        except Munro.DoesNotExist:
-            try:
-                selected_page = Area.objects.get(slug=page_name)
-                url = '/rango/area/' + selected_page.slug
-            except Area.DoesNotExist:
-                return redirect(reverse('rango:index'))
-        
-        print(selected_page)
-        selected_page.views = selected_page.views + 1
-        
-        selected_page.save()
-        
-        return redirect(url)
 
 class LikeAreaView(View):
     #Only can like area if logged in
