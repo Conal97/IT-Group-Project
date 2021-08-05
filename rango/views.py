@@ -18,8 +18,8 @@ from django.http import HttpResponse
 
 def index(request):
     #dictionary used to pass into template as context()
-    area_list = Area.objects.all() #.order_by('-likes')[:5]
-    munro_list = Munro.objects.all() #.order_by('-views')[:5]
+    area_list = Area.objects.all().order_by('-likes')[:3]
+    munro_list = Munro.objects.all().order_by('-likes')[:3]
 
     context_dict = {}
     context_dict['pageheading'] = 'Rango'
@@ -152,9 +152,6 @@ def goto_url(request):
         selected_page.save()
         
         return redirect(url)
-
-    else:
-        return redirect(reverse('rango:index')) 
 
 class LikeAreaView(View):
     #Only can like area if logged in
