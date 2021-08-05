@@ -14,8 +14,8 @@
         <strong id="view_count">{{ area.views }}</strong> views
         <strong id="like_count">{{ area.likes }}</strong> likes
         {% if user.is_authenticated %}
-            <button id="like_btn"
-            data-categoryid="{{ area.id }}"
+            <button id="like_btn_area"
+            data-areaslug="{{ area.slug }}"
             class="btn btn-primary btn-sm"
             type="button">
             <span data-feather="thumbs-up"></span>Like Area</button>

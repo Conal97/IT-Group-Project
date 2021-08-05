@@ -14,8 +14,8 @@
         <strong id="view_count">{{ munro.views }}</strong> views
         <strong id="like_count">{{ munro.likes }}</strong> likes
         {% if user.is_authenticated %}
-            <button id="like_btn"
-            data-categoryid="{{ munro.id }}"
+            <button id="like_btn_munro"
+            data-munroslug="{{ munro.slug }}"
             class="btn btn-primary btn-sm"
             type="button">
             <span data-feather="thumbs-up"></span>Like Munro</button>
@@ -33,6 +33,9 @@
                             {{ munro.description }}  
                         </p>
                     </div>
+                    <strong>
+                Bagged it? Post a  <a href="/rango/post_report/">Hike Report </a>now!<br /> 
+                </strong>
                 </div>
             </div>
 
