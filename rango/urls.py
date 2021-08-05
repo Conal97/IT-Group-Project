@@ -18,4 +18,5 @@ urlpatterns = [
     path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
     path('search_munros/', views.search_munros, name='search_munros'),
     path('munros/<slug:munro_name_slug>/', views.show_munro, name='show_munro'),
+    path('goto/', views.goto_url, name='goto')
 ]

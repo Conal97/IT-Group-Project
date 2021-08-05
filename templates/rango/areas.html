@@ -2,19 +2,17 @@
     <ul class="nav flex-column">
         {% if areas %}
             {% for a in areas %}
-                {% if a == current_area %}
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'rango:show_area' a.slug %}">
-                            <span data-feather="archive"></span>{{ a.name }}
+                        <a class="nav-link" href="{% url 'rango:goto' %}?page_name={{ a.slug }}">
+                            <span data-feather="compass"></span>{{ a.name }}
                         </a>
+                        <!-- to control grammer -->
+                        {% if munro.views > 1 %}
+                            ({{ munro.views }} views)
+                        {% elif munro.views == 1 %}
+                            ({{ munro.views }} view)
+                        {% endif %}
                     </li>
-                {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'rango:show_area' a.slug %}">
-                                <span data-feather="compass"></span>{{ a.name }}
-                            </a>
-                        </li>
-                {% endif %}
             {% endfor %}
         {% else %}
             <li class="nav-item">There are no areas present.</li>
