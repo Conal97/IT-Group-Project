@@ -90,50 +90,51 @@ def populate():
 
     ben_lomond_images = [
         {'name' : 'Ben_Lomond_1.jpg',
-        'title' : 'Ben lomond',
-        'description' : 'First Ben lomond pic',
+        'title' : 'Ben Lomond',
+        'description' : 'First Ben Lomond pic',
         },
 
         {'name' : 'Ben_Lomond_2.jpg',
-        'title' : 'Ben lomond',
-        'description' : 'Second Ben lomond pic',
+        'title' : 'Ben Lomond',
+        'description' : 'Second Ben Lomond pic',
         },
 
         {'name' : 'Ben_Lomond_3.jpg',
-        'title' : 'Ben lomond',
-        'description' : 'Third Ben lomond pic',
+        'title' : 'Ben Lomond',
+        'description' : 'Third Ben Lomond pic',
         },
     ]
 
     ben_vane_images = [
         {'name' : 'Ben_Vane_1.jpg',
-        'title' : 'Ben vane',
-        'description' : 'First Ben vane pic',
+        'title' : 'Ben Vane',
+        'description' : 'First Ben Vane pic',
         },
 
         {'name' : 'Ben_Vane_2.jpg',
-        'title' : 'Ben vane',
-        'description' : 'Second Ben vane pic',
+        'title' : 'Ben Vane',
+        'description' : 'Second Ben Vane pic',
         },
 
         {'name' : 'Ben_Vanes_3.jpg',
-        'title' : 'Ben vane',
-        'description' : 'Third Ben vane pic',
+        'title' : 'Ben Vane',
+        'description' : 'Third Ben Vane pic',
         },
     ]
 
-    munro_images = {'Ben Nevis' : ben_nevis_images, 
-        'Ben Macdui' : ben_macdui_images,
-        'Ben Lomond' : ben_lomond_images,
-        'Ben Vane' : ben_vane_images}
+    munro_images = {'Ben Nevis' : {'images': ben_nevis_images}, 
+        'Ben Macdui' : {'images' : ben_macdui_images},
+        'Ben Lomond' : {'images': ben_lomond_images},
+        'Ben Vane' : {'images': ben_vane_images}}
 
     for area, area_data in areas.items():
         a = add_area(area)
         for m in area_data['munros']:
             mun = add_munro(a, m['name'], m['difficulty'], m['elevation'], m['coordinates'], m['duration'], m['length'], m['description'])
             for munro, image_data in munro_images.items(): 
-                for i in image_data:
-                    add_image(i['name'], i['title'], i['description'], mun) 
+                for i in image_data['images']:
+                    if munro == m['name']:
+                        add_image(i['name'], i['title'], i['description'], mun) 
 
     for a in Area.objects.all():
         for m in Munro.objects.filter(area=a):
