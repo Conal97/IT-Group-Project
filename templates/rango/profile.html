@@ -28,23 +28,35 @@
 
                 <input type="submit" value="Update Picture" name = "Update Picture" />
             </form>
-            
-            <br/>  
-            
-            <form method="post" action="." >
-                {% csrf_token %}
-                {{ bagged_form.as_p }}
-
-                <input type="submit" value="Update bagged munros" name = "Update Bagged" />
-            </form>
-            
-            {% else %}
-            <p>
-                <strong>Tracker: </strong>
-                {{ hiker_profile.bagged }}
-            </p>
             {% endif %}
+        
         </div>
+    </div class="row">
+           
+        {% if selected_user == user %}  
+        <form method="post" action="." >
+            {% csrf_token %}
+            {{ bagged_form.as_p }}
+
+            <input type="submit" value="Update bagged munros" name = "Update Bagged" />
+        </form>
+
+        <br>
+
+        <p>
+            <strong>Tracker: </strong>
+            {{ hiker_profile.bagged }}
+        </p>
+        
+        {% else %}
+        <p>
+            <strong>Tracker: </strong>
+            {{ hiker_profile.bagged }}
+        </p>
+        {% endif %}
+
     </div>
+
+    <div>
 </div>
 {% endblock %}
