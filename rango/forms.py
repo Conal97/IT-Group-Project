@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import fields
 from django.forms.fields import CharField
-from rango.models import BaggedMunros, Hiker, Page, Category, UserProfile, Report
+from rango.models import BaggedMunros, Hiker, UserProfile, Report
 from django.contrib.auth.models import User
 
 class UserProfileForm(forms.ModelForm):
