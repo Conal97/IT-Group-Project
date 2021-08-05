@@ -9,7 +9,9 @@ Max_Length = 128
 
 class Area(models.Model):
     name = models.CharField(max_length=Max_Length, unique = True)
-    slug = models.SlugField()  
+    slug = models.SlugField()
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)  
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -31,6 +33,8 @@ class Munro(models.Model):
     duration = models.CharField(max_length = 2048, default = "")
     length = models.IntegerField(default = 0)
     description = models.CharField(max_length = 2048, default = "")
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -47,6 +51,7 @@ class Image(models.Model):
     title = models.CharField(max_length = 200, default = "")
     description = models.CharField(max_length = 2048, default = "")
     munro = models.ForeignKey(Munro, related_name='images', on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         super(Image, self).save(*args, **kwargs)
