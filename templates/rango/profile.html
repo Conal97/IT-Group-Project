@@ -36,28 +36,27 @@
         
         </div>
     <div>
+
+    <br/>
+
     </div id = "bagged">
         
-
         {% if selected_user == user %}  
 
-
-            <label for="Munros">Bag a munro:</label>
-            <select id="munros" name="munro">
-
-            {% for munro in munros %}
-                <option value = "{{ munro }}"> {{ munro }}</option>
-            {% endfor %}
-
-
+            <label for="munros">Bag a munro:</label>
+            <select id="munros" name="munros">
+                
+                {% for munro in munros %}
+                    <option value = "{{ munro }}"> {{ munro }}</option>
+                {% endfor %}
             </select>
-
-
 
             <form method="post" action="." >
                 {% csrf_token %}
-                {{ bagged_form.as_p }}
-
+                {% for field in bagged_form %}
+                    {{ field }}
+                    {{ field.auto_id}}
+                {% endfor %}
                 <input type="submit" value="Update bagged munros" name = "Update Bagged" />
             </form>
 
