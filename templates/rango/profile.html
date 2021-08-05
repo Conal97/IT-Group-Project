@@ -24,14 +24,24 @@
             {% if selected_user == user %}
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ profile_form.as_p }}
 
-                <input type="submit" value="Update" />
+                <input type="submit" value="Update Picture" name = "Update Picture" />
             </form>
+            
+            <br/>  
+            
+            <form method="post" action="." >
+                {% csrf_token %}
+                {{ bagged_form.as_p }}
+
+                <input type="submit" value="Update bagged munros" name = "Update Bagged" />
+            </form>
+            
             {% else %}
             <p>
-                <strong>Bagged: </strong>
-                <a href="{{ user_profile.bagged }}">{{ user_profile.bagged }}</a>
+                <strong>Tracker: </strong>
+                {{ hiker_profile.bagged }}
             </p>
             {% endif %}
         </div>

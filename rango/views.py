@@ -1,6 +1,6 @@
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
-from rango.forms import HikeReportForm, HikerProfileForm, UserProfileForm
+from rango.forms import HikeReportForm, HikerBaggedMunrosForm, HikerProfileForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
@@ -137,43 +137,56 @@ class ProfileView(View):
             return None
         
         hiker_profile = Hiker.objects.get_or_create(user=user)[0]
-        form = HikerProfileForm({'bagged': hiker_profile.bagged,
-                                'picture': hiker_profile.picture})
+        profile_form = HikerProfileForm({'picture': hiker_profile.picture})
+        bagged_form = HikerBaggedMunrosForm({'bagged': hiker_profile.bagged})
         
-        return (user, hiker_profile, form)
+        return (user, hiker_profile, profile_form, bagged_form)
     
     @method_decorator(login_required)
     def get(self, request, username):
         try:
-            (user, hiker_profile, form) = self.get_user_details(username)
+            (user, hiker_profile, profile_form, bagged_form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('rango:index'))
         
         context_dict = {'hiker_profile': hiker_profile,
                         'selected_user': user,
-                        'form': form}
+                        'profile_form': profile_form,
+                        'bagged_form': bagged_form}
         
         return render(request, 'rango/profile.html', context_dict)
     
     @method_decorator(login_required)
     def post(self, request, username):
         try:
-            (user, hiker_profile, form) = self.get_user_details(username)
+            (user, hiker_profile, profile_form, bagged_form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('rango:index'))
         
-        form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
+        # Update the hiker profile picture
+        if 'Update Picture' in request.POST:
+            profile_form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
 
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse('rango:profile',
-                                    kwargs={'username': username}))
-        else:
-            print(form.errors)
+            if profile_form.is_valid():
+                profile_form.save(commit=True)
+                return redirect(reverse('rango:profile', kwargs={'username': username}))
+            else:
+                print(profile_form.errors)
+
+        # Update bagged munros
+        elif 'Update Bagged' in request.POST:
+            bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
+            if bagged_form.is_valid():
+                bagged_form.save(commit=True)
+                return redirect(reverse('rango:profile', kwargs={'username': username}))
+            else:
+                print(bagged_form.errors)
+
         
         context_dict = {'hiker_profile': hiker_profile,
                         'selected_user': user,
-                        'form': form}
+                        'profile_form': profile_form,
+                        'bagged_form': bagged_form}
         
         return render(request, 'rango/profile.html', context_dict)
 
