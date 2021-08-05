@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from rango.models import UserProfile
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.http import HttpResponse
 
 def index(request):
     #dictionary used to pass into template as context()
@@ -154,6 +155,43 @@ def goto_url(request):
 
     else:
         return redirect(reverse('rango:index')) 
+
+class LikeAreaView(View):
+    #Only can like area if logged in
+    @method_decorator(login_required)
+    def get(self, request):
+        area_slug = request.GET['area_slug']
+
+        try:
+            area = Area.objects.get(slug = area_slug)
+        except Area.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        area.likes = area.likes + 1
+        area.save()
+
+        return HttpResponse(area.likes)
+
+class LikeMunroView(View):
+    #Only can like area if logged in
+    @method_decorator(login_required)
+    def get(self, request):
+        munro_slug = request.GET['munro_slug']
+
+        try:
+            munro = Munro.objects.get(slug = munro_slug)
+        except Munro.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        munro.likes = munro.likes + 1
+        munro.save()
+
+        return HttpResponse(munro.likes)
+
 
 class ProfileView(View):
     def get_user_details(self, username):

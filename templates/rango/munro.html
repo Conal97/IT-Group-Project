@@ -14,8 +14,8 @@
         <strong id="view_count">{{ munro.views }}</strong> views
         <strong id="like_count">{{ munro.likes }}</strong> likes
         {% if user.is_authenticated %}
-            <button id="like_btn"
-            data-categoryid="{{ munro.id }}"
+            <button id="like_btn_munro"
+            data-munroslug="{{ munro.slug }}"
             class="btn btn-primary btn-sm"
             type="button">
             <span data-feather="thumbs-up"></span>Like Munro</button>
