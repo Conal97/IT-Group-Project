@@ -1,6 +1,6 @@
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
-from rango.forms import HikeReportForm, HikerBaggedMunrosForm, HikerProfileForm
+from rango.forms import HikeReportForm, HikerProfileForm, UserProfileForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
@@ -75,7 +75,7 @@ def hike_report(request):
             post.date = timezone.now() 
             post.author = request.user 
             post.save() 
-            return redirect('/review') 
+            return redirect('/index/') 
     else: 
          form=HikeReportForm() 
     return render(request, 'rango/post_report.html', {'form': form}) 
@@ -132,9 +132,7 @@ def search_munros(request):
     else:
         return render(request, 'rango/search_munros.html', {})
 
-# URL tracking view - to keep track of clicks
 def goto_url(request):
-    if request.method == 'GET':
         page_name = request.GET.get('page_name')
         try:
             selected_page = Munro.objects.get(slug=page_name)
@@ -152,9 +150,6 @@ def goto_url(request):
         selected_page.save()
         
         return redirect(url)
-
-    else:
-        return redirect(reverse('rango:index')) 
 
 class LikeAreaView(View):
     #Only can like area if logged in
@@ -201,56 +196,43 @@ class ProfileView(View):
             return None
         
         hiker_profile = Hiker.objects.get_or_create(user=user)[0]
-        profile_form = HikerProfileForm({'picture': hiker_profile.picture})
-        bagged_form = HikerBaggedMunrosForm({'bagged': hiker_profile.bagged})
+        form = HikerProfileForm({'bagged': hiker_profile.bagged,
+                                'picture': hiker_profile.picture})
         
-        return (user, hiker_profile, profile_form, bagged_form)
+        return (user, hiker_profile, form)
     
     @method_decorator(login_required)
     def get(self, request, username):
         try:
-            (user, hiker_profile, profile_form, bagged_form) = self.get_user_details(username)
+            (user, hiker_profile, form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('rango:index'))
         
         context_dict = {'hiker_profile': hiker_profile,
                         'selected_user': user,
-                        'profile_form': profile_form,
-                        'bagged_form': bagged_form}
+                        'form': form}
         
         return render(request, 'rango/profile.html', context_dict)
     
     @method_decorator(login_required)
     def post(self, request, username):
         try:
-            (user, hiker_profile, profile_form, bagged_form) = self.get_user_details(username)
+            (user, hiker_profile, form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('rango:index'))
         
-        # Update the hiker profile picture
-        if 'Update Picture' in request.POST:
-            profile_form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
+        form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
 
-            if profile_form.is_valid():
-                profile_form.save(commit=True)
-                return redirect(reverse('rango:profile', kwargs={'username': username}))
-            else:
-                print(profile_form.errors)
-
-        # Update bagged munros
-        elif 'Update Bagged' in request.POST:
-            bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
-            if bagged_form.is_valid():
-                bagged_form.save(commit=True)
-                return redirect(reverse('rango:profile', kwargs={'username': username}))
-            else:
-                print(bagged_form.errors)
-
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse('rango:profile',
+                                    kwargs={'username': username}))
+        else:
+            print(form.errors)
         
         context_dict = {'hiker_profile': hiker_profile,
                         'selected_user': user,
-                        'profile_form': profile_form,
-                        'bagged_form': bagged_form}
+                        'form': form}
         
         return render(request, 'rango/profile.html', context_dict)
 
@@ -274,6 +256,32 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
+
+# URL tracking view - to keep track of clicks
+def goto_url(request):
+    if request.method == 'GET':
+        page_name = request.GET.get('page_name')
+        try:
+            selected_page = Munro.objects.get(slug=page_name)
+            url = '/rango/munros/' + selected_page.slug
+        except Munro.DoesNotExist:
+            try:
+                selected_page = Area.objects.get(slug=page_name)
+                url = '/rango/area/' + selected_page.slug
+            except Area.DoesNotExist:
+                return redirect(reverse('rango:index'))
+        
+        print(selected_page)
+        selected_page.views = selected_page.views + 1
+        
+        selected_page.save()
+        
+        return redirect(url)
+
+    else:
+        return redirect(reverse('rango:index')) 
+
+
 
 '''def register(request):
 

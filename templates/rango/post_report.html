@@ -1,0 +1,22 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Post a Hike Report
+{% endblock %}
+
+{% block body_block %}
+    <body>
+        <h1>Your Hike Report</h1>
+        <div>
+            <form id="hike_report" method="post" action="/rango/post_report/">
+                {% csrf_token %}
+                How hard did you find this munro? 
+                {{ form.select }}
+                Tell us about your experience below:  
+                {{ form.report_text }} 
+                <input type="submit" name="submit" value="Post Hike Report" />
+            </form>
+        </div>
+    </body>
+{% endblock %}}
