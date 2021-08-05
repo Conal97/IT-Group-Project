@@ -132,7 +132,9 @@ def search_munros(request):
     else:
         return render(request, 'rango/search_munros.html', {})
 
+# URL tracking view - to keep track of clicks
 def goto_url(request):
+    if request.method == 'GET':
         page_name = request.GET.get('page_name')
         try:
             selected_page = Munro.objects.get(slug=page_name)
@@ -150,6 +152,37 @@ def goto_url(request):
         selected_page.save()
         
         return redirect(url)
+
+    else:
+        return redirect(reverse('rango:index')) 
+
+# class UserLikeArea(View):
+#     #Only can like area if logged in
+#     @method_decorator(login_required)
+#     def get(self, request):
+
+#         area_slug = request.GET['area_slug']
+
+#         try:
+#             user = User.objects.get(username=username)
+#         except User.DoesNotExist:
+#             return None
+        
+#         try:
+#             area = Area.objects.get(name=area_slug)
+#         except User.DoesNotExist:
+#             return None
+        
+#         hiker_profile = Hiker.objects.get_or_create(user=user)[0]
+
+#         try:
+#             user_like_area = UserLikeArea.objects.get_or_create(area = area, hiker=hiker_id)
+#         except Area.DoesNotExist:
+#             return HttpResponse(-1)
+#         except ValueError:
+#             return HttpResponse(-1)
+
+#         return HttpResponse(area.likes)
 
 class LikeAreaView(View):
     #Only can like area if logged in
@@ -256,32 +289,6 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
-
-# URL tracking view - to keep track of clicks
-def goto_url(request):
-    if request.method == 'GET':
-        page_name = request.GET.get('page_name')
-        try:
-            selected_page = Munro.objects.get(slug=page_name)
-            url = '/rango/munros/' + selected_page.slug
-        except Munro.DoesNotExist:
-            try:
-                selected_page = Area.objects.get(slug=page_name)
-                url = '/rango/area/' + selected_page.slug
-            except Area.DoesNotExist:
-                return redirect(reverse('rango:index'))
-        
-        print(selected_page)
-        selected_page.views = selected_page.views + 1
-        
-        selected_page.save()
-        
-        return redirect(url)
-
-    else:
-        return redirect(reverse('rango:index')) 
-
-
 
 '''def register(request):
 
