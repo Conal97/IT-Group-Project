@@ -1,9 +1,42 @@
 from django import forms
+from django.forms import fields
 from django.forms.fields import CharField
-from rango.models import Hiker, Page, Category, UserProfile, Report
+from rango.models import BaggedMunros, Hiker, Page, Category, UserProfile, Report
 from django.contrib.auth.models import User
 
-class CategoryForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture',)
+
+class HikerProfileForm(forms.ModelForm):
+    class Meta:
+        model = Hiker
+        fields = ('picture',)
+
+    
+class HikerBaggedMunrosForm(forms.ModelForm):
+    class Meta:
+        model = Hiker
+        fields = ('bagged',)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        bagged_string = cleaned_data.get('bagged')
+
+
+class HikeReportForm(forms.ModelForm):
+    report_text = forms.CharField(max_length=3000, help_text='Enter your report here.')
+    difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
+
+    class Meta:
+        model = Report
+        fields = ('difficulty', 'report_text')
+
+
+
+
+'''class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
                             help_text='Please enter the category name.')
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0) #even tho these are 
@@ -33,23 +66,4 @@ class PageForm(forms.ModelForm):
                 url = f'http://{url}'
                 cleaned_data['url']=url
 
-            return cleaned_data
-
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture',)
-
-class HikerProfileForm(forms.ModelForm):
-    class Meta:
-        model = Hiker
-        fields = ('bagged', 'picture')
-
-
-class HikeReportForm(forms.ModelForm):
-    report_text = forms.CharField(max_length=3000, help_text='Enter your report here.')
-    difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
-
-    class Meta:
-        model = Report
-        fields = ('difficulty', 'report_text')
+            return cleaned_data'''

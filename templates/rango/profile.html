@@ -5,6 +5,10 @@
     Profile for {{ selected_user.username }}
 {% endblock %}
 
+{% block css %}  
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
 {% block body_block %}
 <div class="jumbotron p-4">
     <div class="container">
@@ -13,28 +17,51 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div  id = "picture">
         {% if hiker_profile.picture %}
-        <img src="{{ MEDIA_URL }}{{ hiker_profile.picture }}" width="300" height="300" alt="{{ selected_user.username }}'s profile image" />
+        <img src="{{ MEDIA_URL }}{{ hiker_profile.picture }}" width="300" height="300" alt="{{ selected_user.username }}'s profile image" class="center"/>
         {% else %}
-        <img  src="/static/images/ben_lomond1.jpg" width="300" height="300" alt="Placeholder image" />
+        <img  src="/static/images/ben_lomond1.jpg" width="300" height="300" alt="Placeholder image" class="center" />
         {% endif %}
         <br />
         <div>
             {% if selected_user == user %}
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ profile_form.as_p }}
 
-                <input type="submit" value="Update" />
+                <input type="submit" value="Update Picture" name = "Update Picture" />
             </form>
-            {% else %}
-            <p>
-                <strong>Bagged: </strong>
-                <a href="{{ user_profile.bagged }}">{{ user_profile.bagged }}</a>
-            </p>
             {% endif %}
+        
         </div>
+    <div>
+    </div id = "bagged">
+        
+        <br/>
+
+        {% if selected_user == user %}  
+        <form method="post" action="." >
+            {% csrf_token %}
+            {{ bagged_form.as_p }}
+
+            <input type="submit" value="Update bagged munros" name = "Update Bagged" />
+        </form>
+
+        <br>
+
+        <p>
+            <strong>Tracker: </strong>
+            {{ hiker_profile.bagged }}
+        </p>
+        
+        {% else %}
+        <p>
+            <strong>Tracker: </strong>
+            {{ hiker_profile.bagged }}
+        </p>
+        {% endif %}
+
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,19 @@
+.content {
+    display: grid;
+    align-content: space-between;
+    height: 275px;
+    border: 1px solid black;
+    width: 200px;
+}
+.box {
+    background: #0479D9;
+    height: 75px;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+  
