@@ -9,7 +9,7 @@ def populate():
 
     lochaber_munros = [
         {'name' : 'Ben Nevis',
-        'difficulty' : 4,
+        'difficulty' : 3,
         'elevation': 1345,
         'coordinates': '56.7969° N, 5.0036° W',
         'duration' : '5 - 8 hours',

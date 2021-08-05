@@ -31,13 +31,21 @@
             <div class="col-md-6">
                 <div class="card mb-6">
                     <div class="card-body">
-                        <h2>Map</h2>
+                        <h2>Statistics</h2>
                         <p class="card-text">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d69913.5805281933!2d-5.071528499252209!3d56.79791289676395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488932978af1e5f3%3A0x6e948b77ffad9a71!2sBen%20Nevis!5e0!3m2!1sen!2skr!4v1628144434805!5m2!1sen!2skr" width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            {% if munro %}
+                                <li>Elevation: {{ munro.elevation }}m </li>
+                                <li>Duration: {{ munro.duration }}</li>
+                                <li>Length: {{ munro.length }}km</li>
+                                <li><a href="#explanation">Difficulty</a>: Level {{ munro.difficulty }}</li>
+                                <li><a href="#map">Coordinates</a>: {{ munro.coordinates }}</li> 
+                            {% else %}
+                                Unknown Munro
+                            {% endif %}
                         </p>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
 
@@ -50,7 +58,9 @@
                         {% if image.munro == munro %}
                             <div class="col-lg-4 mb-4">
                                 <div class="card">
-                                    <img class="card-img-top" src="/static/images/{{ image.name }}" alt="">
+                                    <img class="img-fluid img-thumbnail" src="/static/images/{{ image.name }}" alt="">
+                                    <h5 class="card-title">{{image.title}}</h5>
+                                    <p class="card-text">{{image.description}}</p>
                                 </div>
                             </div>
                         {% endif %} 
@@ -61,5 +71,36 @@
            </div>
         </div>
     </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body" id="map">
+                        <h2>Map</h2>
+                        <p class="card-text">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d69913.5805281933!2d-5.071528499252209!3d56.79791289676395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488932978af1e5f3%3A0x6e948b77ffad9a71!2sBen%20Nevis!5e0!3m2!1sen!2skr!4v1628144434805!5m2!1sen!2skr" width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-6">
+                <div class="card mb-6">
+                    <div class="card-body" id="explanation">
+                        <h2>Levels Explained</h2>
+                        <p class="card-text">
+                            <li>Level 1: Family friendly adventure</li>
+                            <li>Level 2: For your average joe</li>
+                            <li>Level 3: For your average joe who wants a challenge</li>
+                            <li>Level 4: Only for the intermediate climber</li>
+                            <li>Level 5: Only for the expereinced climber</li>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %} 
