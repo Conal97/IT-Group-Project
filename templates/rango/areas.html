@@ -4,14 +4,8 @@
             {% for a in areas %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'rango:goto' %}?page_name={{ a.slug }}">
-                            <span data-feather="compass"></span>{{ a.name }}
+                            <span data-feather="compass"></span>{{ a.name }} 
                         </a>
-                        <!-- to control grammer -->
-                        {% if munro.views > 1 %}
-                            ({{ munro.views }} views)
-                        {% elif munro.views == 1 %}
-                            ({{ munro.views }} view)
-                        {% endif %}
                     </li>
             {% endfor %}
         {% else %}

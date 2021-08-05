@@ -27,12 +27,6 @@
     <ul>
         {% for munro in munros %} 
             <li><a href="{% url 'rango:goto' %}?page_name={{ munro.slug }}">{{ munro.name }}</a>
-                <!-- to control grammer -->
-                {% if munro.views > 1 %}
-                    ({{ munro.views }} views)
-                {% elif munro.views == 1 %}
-                    ({{ munro.views }} view)
-                {% endif %}
             </li>
         {% endfor %}
     </ul>

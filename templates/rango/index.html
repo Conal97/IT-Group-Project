@@ -77,7 +77,16 @@
                         {% if areas %}
                             <ul class="list-group">
                                 {% for a in areas %}
-                                    <li class="list-group-item"><a href="{% url 'rango:show_area' a.slug %}">{{ a.name }}</a></li class="list-group-item">
+                                <li class="list-group-item"><a href="{% url 'rango:goto' %}?page_name={{ a.slug }}">
+                                        {{ a.name }}
+                                        <!-- to control grammer -->
+                                        {% if a.views > 1 %}
+                                            ({{ a.views }} views)
+                                        {% elif a.views == 1 %}
+                                            ({{ a.views }} view)
+                                        {% endif %}
+                                    </a class="list-group-item">
+                                </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -96,7 +105,16 @@
                         {% if munros %}
                             <ul class="list-group">
                                 {% for munro in munros %}
-                                    <li class="list-group-item"><a href="{% url 'rango:show_munro' munro.slug %}">{{ munro.name }}</a></li>
+                                    <li class="list-group-item"><a href="{% url 'rango:goto' %}?page_name={{ munro.slug }}">
+                                            {{ munro.name }}
+                                            <!-- to control grammer -->
+                                            {% if munro.views > 1 %}
+                                                ({{ munro.views }} views)
+                                            {% elif munro.views == 1 %}
+                                                ({{ munro.views }} view)
+                                            {% endif %}
+                                        </a class="list-group-item">
+                                    </li>                                 
                                 {% endfor %}
                             </ul>
                         {% else %}

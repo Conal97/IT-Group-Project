@@ -149,8 +149,6 @@ def goto_url(request):
         selected_page.views = selected_page.views + 1
         
         selected_page.save()
-
-        
         
         return redirect(url)
 
