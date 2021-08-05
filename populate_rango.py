@@ -3,79 +3,158 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.setti
 
 import django
 django.setup()
-from rango.models import Area, Munro 
+from rango.models import Area, Image, Munro 
 
 def populate():
 
-    fort_william_munros = [
+    lochaber_munros = [
         {'name' : 'Ben Nevis',
-        'difficulty' : 1,
+        'difficulty' : 4,
         'elevation': 1345,
         'coordinates': '56.7969° N, 5.0036° W',
+        'duration' : '5 - 8 hours',
+        'length' : 17,
         'description': 'Ben Nevis is the highest mountain of the British Isles. It is situated in the Highland council area, Scotland. Its summit, reaching an elevation of 4,406 feet (1,343 metres), is a plateau of about 100 acres (40 hectares), with a slight slope to the south and a sheer face to the northeast',
-        'image_1' : 'Ben_Nevis_1.jpg',
-        'image_2' : 'Ben_Nevis_2.jpg',
-        'image_3' : 'Ben_Nevis_3.jpg',
         }
     ]
 
     cairngorms_munros = [
         { 'name' : 'Ben Macdui',
-        'difficulty' : 2,
+        'difficulty' : 5,
         'elevation': 1309,
         'coordinates': '57.0704° N, 3.6691° W',
-        'description': 'Generic description',
-        'image_1' : 'Ben_Macdui_1.jpg',
-        'image_2' : 'Ben_Macdui_2.jpg',
-        'image_3' : 'Ben_Macdui_3.jpg',
+        'duration' : '6 - 7 hours',
+        'length' : 17.5,
+        'description': 'Ben Macdui Generic description',
         }
     ]
 
     loch_lomond_munros = [
         {'name' : 'Ben Lomond',
-        'difficulty' : 5,
+        'difficulty' : 3,
         'elevation': 974,
         'coordinates': '56.7969° N, 5.0036° W',
-        'description': 'Generic description',
-        'image_1' : 'Ben_Lomond_1.jpg',
-        'image_2' : 'Ben_Lomond_2.jpg',
-        'image_3' : 'Ben_Lomond_3.jpg',
+        'duration' : '4.5 - 5.5 hours',
+        'length' : 12,
+        'description': 'Ben Lomond Generic description',
         },
 
         {'name' : 'Ben Vane',
-        'difficulty' : 4,
+        'difficulty' : 3,
         'elevation': 915,
         'coordinates': '56.2499° N, 4.7817° W',
-        'description': 'Generic description',
-        'image_1' : 'Ben_Vane_1.jpg',
-        'image_2' : 'Ben_Vane_2.jpg',
-        'image_3' : 'Ben_Vane_3.jpg',
+        'duration' : '4.5 - 6.5 hours',
+        'length' : 11,
+        'description': 'Ben Vane Generic description',
         }
     ]
 
-    areas = {'Fort William' : {'munros': fort_william_munros}, 
+    areas = {'Lochaber' : {'munros': lochaber_munros}, 
             'Cairngorms' : {'munros': cairngorms_munros},
             'Loch Lomond' : {'munros': loch_lomond_munros}}
 
+    ben_nevis_images = [
+        {'name' : 'Ben_Nevis_1.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'First Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_2.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Second Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_3.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Third Ben Nevis pic',
+        },
+    ]
+
+    ben_macdui_images = [
+        {'name' : 'Ben_Nevis_1.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'First Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_2.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Second Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_3.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Third Ben Nevis pic',
+        },
+    ]
+
+
+    ben_lomond_images = [
+        {'name' : 'Ben_Nevis_1.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'First Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_2.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Second Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_3.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Third Ben Nevis pic',
+        },
+    ]
+
+    ben_vane_images = [
+        {'name' : 'Ben_Nevis_1.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'First Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_2.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Second Ben Nevis pic',
+        },
+
+        {'name' : 'Ben_Nevis_3.jpg',
+        'title' : 'Ben Nevis',
+        'description' : 'Third Ben Nevis pic',
+        },
+    ]
+
+    munro_images = {'Ben Nevis' : ben_nevis_images, 
+        'Ben Macdui' : ben_macdui_images,
+        'Ben Lomond' : ben_lomond_images,
+        'Ben Vane' : ben_vane_images}
 
     for area, area_data in areas.items():
         a = add_area(area)
         for m in area_data['munros']:
-            add_munro(a, m['name'], m['difficulty'], m['elevation'], m['coordinates'], m['description'], m['image_1'], m['image_2'], m['image_3'])
+            mun = add_munro(a, m['name'], m['difficulty'], m['elevation'], m['coordinates'], m['duration'], m['length'], m['description'])
+            for munro, image_data in munro_images.items(): 
+                for i in image_data:
+                    add_image(i['name'], i['title'], i['description'], mun) 
 
     for a in Area.objects.all():
         for m in Munro.objects.filter(area=a):
-            print(f'- {a}: {m}')
+            for i in Image.objects.filter(munro=m):
+                print(f'- {a}: {m}: {i}')
 
-def add_munro(area, name, diff, ele, coords, desc, img1, img2, img3):
+def add_image(name, title, desc, munro):
+    i = Image.objects.get_or_create(munro = munro, name = name)[0]
+    i.title = title
+    i.description = desc
+    i.save()
+    return i
+
+def add_munro(area, name, diff, ele, coords, dur, len, desc):
     m = Munro.objects.get_or_create(area = area, name=name)[0] 
     m.difficulty = diff
     m.elevation = ele
     m.coordinates = coords
+    m.duration = dur
+    m.length = len
     m.description = desc
-    m.image_1 = img1
-    m.image_2 = img2
-    m.image_3 = img3
     m.save()
     return m
 

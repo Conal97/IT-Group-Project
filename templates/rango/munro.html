@@ -45,24 +45,17 @@
     <section id="gallery">
         <div class="container p-2">
            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="/static/images/{{ munro.image_1 }}" alt="">
-
-                    </div>
-                </div>
-
-                <div class="col-lg-4 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="/static/images/{{ munro.image_2 }}" alt="">
-                    </div>
-                </div>
-
-                <div class="col-lg-4 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="/static/images/{{ munro.image_3 }}" alt="">
-                    </div>
-                </div>
+                {% if images %}
+                    {% for image in images %} 
+                        <div class="col-lg-4 mb-4">
+                            <div class="card">
+                                <img class="card-img-top" src="/static/images/{{ image.name }}" alt="">
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %} 
+                    <strong>No images currently in munro.</strong>
+                {% endif %} 
            </div>
         </div>
     </section>

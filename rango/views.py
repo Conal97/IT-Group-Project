@@ -108,11 +108,14 @@ def show_munro(request, munro_name_slug):
 
     try:
         munro = Munro.objects.get(slug = munro_name_slug)
+        images = munro.images.all()
         context_dict['pageheading'] = munro
         context_dict['munro'] = munro
+        context_dict['images'] = images
     except Munro.DoesNotExist:
         context_dict['pageheading'] = None
-        context_dict['munro'] = None 
+        context_dict['munro'] = None
+        context_dict['images'] = None 
     
     return render(request, 'rango/munro.html', context=context_dict)
 
