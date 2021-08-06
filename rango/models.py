@@ -35,6 +35,8 @@ class Munro(models.Model):
     description = models.CharField(max_length = 2048, default = "")
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
+    mapslink = models.CharField(default="", max_length=2048)
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -100,6 +102,7 @@ class Hiker(models.Model):
     bagged =  models.CharField(max_length = 300, default='', blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     verified = models.BooleanField(default=False)
+    munro = models.ForeignKey(Munro, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -113,11 +116,11 @@ class Hiker(models.Model):
 class Report(models.Model):
 
     # author = models.OneToOneField(Hiker, on_delete=CASCADE)
-    # munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
     difficulty = models.IntegerField(default = 0, validators=[MaxValueValidator(10), MinValueValidator(1)])
+    munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
     #date = models.DateTimeField(null=True, blank=True)
     class Meta:
         verbose_name_plural='Reports'

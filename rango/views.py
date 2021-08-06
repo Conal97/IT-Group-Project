@@ -345,7 +345,7 @@ class ProfileView(View):
             hiker = Hiker.objects.all()
             bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
             if bagged_form.is_valid():
-                bagged_munro = bagged_form.save(commit=True)
+                bagged_form.save(commit=True)
                 return redirect(reverse('rango:profile', kwargs={'username': username}))
             else:
                 print(bagged_form.errors)
