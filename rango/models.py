@@ -35,6 +35,7 @@ class Munro(models.Model):
     description = models.CharField(max_length = 2048, default = "")
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
+    mapslink = models.CharField(default="", max_length=2048)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

@@ -29,7 +29,7 @@ def populate():
         'duration' : '6 - 7 hours',
         'length' : 17.5,
         'description': 'Ben Macdui is the second highest mountain in Scotland (and all of the British Isles) after Ben Nevis, and the highest in the Cairngorm Mountains and the wider Cairngorms National Park. The summit elevation is 1,309 metres. Ben Macdui lies on the southern edge of the Cairngorm plateau, on the boundary between the historic counties of Aberdeenshire and Banffshire.',
-        'url' : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d69913.5805281933!2d-5.071528499252209!3d56.79791289676395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488932978af1e5f3%3A0x6e948b77ffad9a71!2sBen%20Nevis!5e0!3m2!1sen!2skr!4v1628144434805!5m2!1sen!2skr',
+        'url' : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34702.29234376064!2d-3.7047309290042474!3d57.070476024862074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4885f0c82878e349%3A0x1d0c681aff302730!2sBen%20Macdui!5e0!3m2!1sen!2skr!4v1628151939885!5m2!1sen!2skr",
         'views' : 25,
         'likes' : 10,
         }
@@ -42,8 +42,8 @@ def populate():
         'coordinates': '56.7969° N, 5.0036° W',
         'duration' : '4.5 - 5.5 hours',
         'length' : 12,
-        'description': 'Ben Lomonond is situated on the eastern shore of Loch Lomond, it is the most southerly of the Munros. Ben Lomond lies within the Ben Lomond National Memorial Park and the Loch Lomond and The Trossachs National Park, property of the National Trust for Scotland.Its accessibility from Glasgow and elsewhere in central Scotland, together with the relative ease of ascent from Rowardennan, makes it one of the most popular of all the Munros.',
-        'url' : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d69913.5805281933!2d-5.071528499252209!3d56.79791289676395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488932978af1e5f3%3A0x6e948b77ffad9a71!2sBen%20Nevis!5e0!3m2!1sen!2skr!4v1628144434805!5m2!1sen!2skr',
+        'description': 'Ben Lomond is situated on the eastern shore of Loch Lomond, it is the most southerly of the Munros. Ben Lomond lies within the Ben Lomond National Memorial Park and the Loch Lomond and The Trossachs National Park, property of the National Trust for Scotland.Its accessibility from Glasgow and elsewhere in central Scotland, together with the relative ease of ascent from Rowardennan, makes it one of the most popular of all the Munros.',
+        'url' : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d284444.32260357623!2d-4.785733625084698!3d56.153278769271694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4888fe1e7dc8913d%3A0xb0349002fcb683b2!2sBen%20Lomond!5e0!3m2!1sen!2skr!4v1628152179964!5m2!1sen!2skr',
         'views' : 100,
         'likes' : 50,
         },
@@ -55,7 +55,7 @@ def populate():
         'duration' : '4.5 - 6.5 hours',
         'length' : 11,
         'description': 'Ben Vane is situated in the southern Highlands. It is one of the Arrochar Alps and stands slightly separate from the other mountains of the group being connected on its western side to the neighbouring Beinn Ìme. Ben Vane itself just qualifies as a Munro reaching a height of 915 metresand is characterised by steep and rugged slopes which fall away to the Inveruglas Water to the east and the Allt Coiregroigan to the south.',
-        'url' : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d69913.5805281933!2d-5.071528499252209!3d56.79791289676395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488932978af1e5f3%3A0x6e948b77ffad9a71!2sBen%20Nevis!5e0!3m2!1sen!2skr!4v1628144434805!5m2!1sen!2skr',
+        'url' : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8866.521374988151!2d-4.790489858935455!3d56.24989551234191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4889048775bea013%3A0xa769f749a02d3d98!2sBen%20Vane!5e0!3m2!1sen!2skr!4v1628152049636!5m2!1sen!2skr",
         'views' : 50,
         'likes' : 25,
         }
@@ -154,7 +154,7 @@ def populate():
     for area, area_data in areas.items():
         a = add_area(area, views = area_data['views'], likes = area_data['likes'])
         for m in area_data['munros']:
-            mun = add_munro(a, m['name'], m['difficulty'], m['elevation'], m['coordinates'], m['duration'], m['length'], m['description'], m['views'], m['likes'],)
+            mun = add_munro(a, m['name'], m['difficulty'], m['elevation'], m['coordinates'], m['duration'], m['length'], m['description'], m['views'], m['likes'],m['url'],)
             for munro, image_data in munro_images.items(): 
                 for i in image_data['images']:
                     if munro == m['name']:
@@ -173,7 +173,7 @@ def add_image(name, title, desc, munro, likes):
     i.save()
     return i
 
-def add_munro(area, name, diff, ele, coords, dur, len, desc, views, likes):
+def add_munro(area, name, diff, ele, coords, dur, len, desc, views, likes, link):
     m = Munro.objects.get_or_create(area = area, name=name)[0] 
     m.difficulty = diff
     m.elevation = ele
@@ -183,6 +183,7 @@ def add_munro(area, name, diff, ele, coords, dur, len, desc, views, likes):
     m.description = desc
     m.views = views
     m.likes = likes
+    m.mapslink = link
     m.save()
     return m
 
