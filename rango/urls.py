@@ -20,4 +20,5 @@ urlpatterns = [
     path('user_likes_area/', views.UserLikesArea.as_view(), name='user_likes_area'),
     path('user_likes_munro/', views.UserLikesMunro.as_view(), name='user_likes_munro'),
     path('post_report/', views.hike_report, name='post_report'),
+    path('suggest/', views.AreaSuggestionView.as_view(), name='suggest')
 ]

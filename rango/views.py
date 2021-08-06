@@ -48,7 +48,7 @@ def search(request):
     return render(request, 'rango/search.html', {'result_list':result_list})
 
 def photo_gallery(request):
-    images = Image.objects.all()
+    images = Image.objects.all() #packages image files into a form that can be fed to template as part of the context dictionary
 
     context_dict = {}
     context_dict['pageheading'] = 'Photo Gallery'
@@ -61,7 +61,7 @@ def munro(request, munro_name_slug):
     context_dict = {}
     context_dict['details'] = "Details: "
     context_dict['reviews'] = "View community hike reports here"
-    try:
+    try: #ensures the munro exists before adding it to the context dictionary
         munro = Munro.objects.get(slug=munro_name_slug)
         context_dict['munro'] = munro
     except Munro.DoesNotExist: 
@@ -88,13 +88,13 @@ def hike_report(request):
         
         form = HikeReportForm(request.POST) 
         munro = Munro.objects.get(slug=munro_name)
-
-        if form.is_valid(): 
+        
+        if form.is_valid(): #ensures form is valid before making changes to the application/database
             post = form.save(commit=False) 
             post.author = current_user
             post.munro = munro
             post.save() 
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))#returns to previous page after post
 
     else: 
          form=HikeReportForm() 
@@ -111,7 +111,7 @@ def area(request):
 def show_area(request, area_name_slug):
     context_dict = {}
 
-    try:
+    try:#ensures area and munros exist before adding to context dictionary
         area = Area.objects.get(slug=area_name_slug)
         munros = Munro.objects.filter(area = area)
         context_dict['pageheading'] = area
@@ -124,7 +124,7 @@ def show_area(request, area_name_slug):
 
     current_user = request.user
     if request.user.is_authenticated:
-        try:
+        try: #user requires to be logged in to interact with like functionality
             userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
             context_dict['userlikearea'] = userlikearea
         except UserLikeArea.DoesNotExist:
@@ -135,7 +135,7 @@ def show_area(request, area_name_slug):
 def show_munro(request, munro_name_slug):
     context_dict = {}
 
-    try:
+    try: #ensures munro exists before continuing
         munro = Munro.objects.get(slug = munro_name_slug)
         images = munro.images.all()
         context_dict['pageheading'] = munro
@@ -147,7 +147,7 @@ def show_munro(request, munro_name_slug):
         context_dict['images'] = None 
     
     current_user = request.user
-    if request.user.is_authenticated:
+    if request.user.is_authenticated: #user cannot interact with like functionality without being logged in
         try:
             userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
             context_dict['userlikemunro'] = userlikemunro
@@ -165,10 +165,42 @@ def search_munros(request):
         searched = request.POST['searched']
         munros = Munro.objects.filter(name__contains=searched)
 
-        return render(request, 'rango/search_munros.html', {'searched':searched, 'munros': munros})
+        return render(request, 'rango/search_munros.html', {'searched':searched, 'munros': munros, 'pageheading' : 'Search Results'})
     
     else:
         return render(request, 'rango/search_munros.html', {})
+
+# Render areas page with new area suggestions 
+class AreaSuggestionView(View):
+    def get(self, request):
+        area_list = []
+
+        if 'suggestion' in request.GET:
+            suggestion = request.GET['suggestion']
+        else:
+            suggestion = ''
+        
+        area_list = get_area_list(max_results=8,starts_with=suggestion)
+        
+        # If search bar is empty
+        if len(area_list) == 0:
+            area_list = Area.objects.order_by('name')
+       
+        return render(request,'rango/areas.html', {'areas': area_list})
+
+# Helper to get new area list depending on search input
+def get_area_list(max_results, starts_with):
+    area_list = []
+
+    if starts_with:
+        area_list = Area.objects.filter(name__istartswith=starts_with)
+    
+    # If area list is bigger than max list, just show max number in area list
+    if max_results > 0:
+        if len(area_list) > max_results:
+            area_list = area_list[:max_results]
+    
+    return area_list
 
 # URL tracking view - to keep track of clicks
 def goto_url(request):
@@ -214,9 +246,9 @@ class UserLikesArea(View):
 
         try:
             user_likes_area = UserLikeArea.objects.get_or_create(area = area, user = user)[0]
-        except UserLikeArea.DoesNotExist:
+        except UserLikeArea.DoesNotExist:#ensures invalid likes are not counted
             return HttpResponse(-1)
-        except ValueError:
+        except ValueError:#ensures invalid likes are not counted
             return HttpResponse(-1)
 
         if like_unlike == 'like':

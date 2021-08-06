@@ -69,18 +69,17 @@
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                    <div class="input-group col-12">
-                        <div class="form-outline col-9 pr-0">
-                          <input type="search" placeholder="search area" id="form1" class="form-control" />
+                        <div class="w-75 ml-3">
+                            <input type="search"
+                            id="search-input"
+                            class="form-control ds-input"
+                            placeholder="Search..." />
                         </div>
-                        <button type="button" class="btn btn-primary col-3 pl-0">
-                          <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    {% block sidebar_block %}
-                        {% get_area_list areas %}
-                    {% endblock %}
+                        <div class="sidebar-sticky" id="areas-listing">
+                            {% block sidebar_block %}
+                                {% get_area_list areas %}
+                            {% endblock %}
+                        </div>
                 </nav>
                 
                 <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		
