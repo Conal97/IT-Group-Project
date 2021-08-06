@@ -13,7 +13,8 @@
     <div class ="pb-4" id="mydiv">
         <strong id="view_count">{{ area.views }}</strong> views
         <strong id="like_count">{{ area.likes }}</strong> likes
-        {% if user.is_authenticated %}
+            <!-- requires user to be logged in to interact with the like functionality -->
+        {% if user.is_authenticated %} 
             {% if userlikearea.has_liked %}
                 <button id="unlike_btn_area"
                 data-areaslug="{{ area.slug }}"
@@ -38,6 +39,7 @@
 
     {% if munros %}
     <ul>
+        <!-- populates page with associated munros/their slugified urls  -->
         {% for munro in munros %} 
             <li><a href="{% url 'rango:goto' %}?page_name={{ munro.slug }}">{{ munro.name }}</a>
             </li>
