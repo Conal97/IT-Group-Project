@@ -4,7 +4,7 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Munro
+from rango.models import Area, Hiker, Munro, UserLikeArea
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -102,7 +102,14 @@ def show_area(request, area_name_slug):
         context_dict['pageheading'] = None 
         context_dict['area'] = None
         context_dict['munros'] = None
-    
+
+    try:
+        current_user = request.user
+        userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
+        context_dict['userlikearea'] = userlikearea
+    except UserLikeArea.DoesNotExist:
+        context_dict['userlikearea'] = None
+
     return render(request, 'rango/area.html', context=context_dict)
 
 def show_munro(request, munro_name_slug):
@@ -156,39 +163,51 @@ def goto_url(request):
     else:
         return redirect(reverse('rango:index')) 
 
-# class UserLikeArea(View):
-#     #Only can like area if logged in
-#     @method_decorator(login_required)
-#     def get(self, request):
+class UserLikesArea(View):
+    #Only can like area if logged in
+    @method_decorator(login_required)
+    def get(self, request):
 
-#         area_slug = request.GET['area_slug']
-
-#         try:
-#             user = User.objects.get(username=username)
-#         except User.DoesNotExist:
-#             return None
+        area_slug = request.GET['area_slug']
+        user_name = request.GET['user_name']
+        like_unlike = request.GET['like_unlike']
         
-#         try:
-#             area = Area.objects.get(name=area_slug)
-#         except User.DoesNotExist:
-#             return None
-        
-#         hiker_profile = Hiker.objects.get_or_create(user=user)[0]
+        try:
+            area = Area.objects.get(slug=area_slug)
+        except Area.DoesNotExist:
+            return None
 
-#         try:
-#             user_like_area = UserLikeArea.objects.get_or_create(area = area, hiker=hiker_id)
-#         except Area.DoesNotExist:
-#             return HttpResponse(-1)
-#         except ValueError:
-#             return HttpResponse(-1)
+        try:
+            user = User.objects.get(username=user_name)
+        except User.DoesNotExist:
+            return None
 
-#         return HttpResponse(area.likes)
+        try:
+            user_likes_area = UserLikeArea.objects.get_or_create(area = area, user = user)[0]
+        except UserLikeArea.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if like_unlike == 'like':
+            user_likes_area.has_liked = True
+        else:
+            user_likes_area.has_liked = False
+
+        user_likes_area.save()
+
+        print(area)
+        print(user)
+        print(user_likes_area.has_liked)
+
+        return HttpResponse(user_likes_area.has_liked)
 
 class LikeAreaView(View):
     #Only can like area if logged in
     @method_decorator(login_required)
     def get(self, request):
         area_slug = request.GET['area_slug']
+        like_unlike = request.GET['like_unlike']
 
         try:
             area = Area.objects.get(slug = area_slug)
@@ -197,7 +216,11 @@ class LikeAreaView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        area.likes = area.likes + 1
+        if like_unlike == 'like':
+            area.likes = area.likes + 1
+        else:
+            area.likes = area.likes - 1
+
         area.save()
 
         return HttpResponse(area.likes)

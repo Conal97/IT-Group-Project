@@ -46,13 +46,16 @@ class Munro(models.Model):
     def __str__(self):
         return self.name
 
-# class UserLikeArea(models.Model):
-#     area = models.ForeignKey(Area, on_delete=models.CASCADE,null=True ,blank=True)
-#     hiker_key = models.ForeignKey('Hiker', on_delete=models.CASCADE, null=True, blank=True)
-#     has_liked = models.BooleanField(default=False)
+class UserLikeArea(models.Model):
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    has_liked = models.BooleanField(default=False)
 
-#     def __str__(self):
-#         return self.has_liked
+    def save(self, *args, **kwargs):
+        super(UserLikeArea, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.has_liked
 
 class BaggedMunros(models.Model):
     hiker_key = models.ForeignKey('Hiker', on_delete=models.CASCADE, null=True, blank=True)

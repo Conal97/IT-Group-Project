@@ -21,5 +21,6 @@ urlpatterns = [
     path('goto/', views.goto_url, name='goto'),
     path('like_area/', views.LikeAreaView.as_view(), name='like_area'),
     path('like_munro/', views.LikeMunroView.as_view(), name='like_munro'),
+    path('user_likes_area/', views.UserLikesArea.as_view(), name='user_likes_area'),
     path('post_report/', views.hike_report, name='post_report'),
 ]
