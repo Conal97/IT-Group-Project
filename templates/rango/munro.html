@@ -80,10 +80,13 @@
                     {% for image in images %} 
                         {% if image.munro == munro %}
                             <div class="col-lg-4 mb-4">
-                                <div class="card">
-                                    <img class="img-fluid img-thumbnail" src="/static/images/{{ image.name }}" alt="">
+                                <div class="card-body">
+                                    <img class="card-img-top img-thumbnail" src="/static/images/{{ image.name }}" alt="">
                                     <h5 class="card-title">{{image.title}}</h5>
                                     <p class="card-text">{{image.description}}</p>
+                                    <!-- using anchor tag since only visual not real btn -->
+                                    <a href="" class="btn btn-outline-success btn-sm">Download</a>
+                                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
                                 </div>
                             </div>
                         {% endif %} 

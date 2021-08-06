@@ -4,7 +4,7 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Munro, UserLikeArea, UserLikeMunro
+from rango.models import Area, Hiker, Image, Munro, UserLikeArea, UserLikeMunro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -48,7 +48,12 @@ def search(request):
     return render(request, 'rango/search.html', {'result_list':result_list})
 
 def photo_gallery(request):
-    context_dict = {'pageheading': 'Photo Gallery'}
+    images = Image.objects.all()
+
+    context_dict = {}
+    context_dict['pageheading'] = 'Photo Gallery'
+    context_dict['images'] = images
+
     return render(request, 'rango/photo_gallery.html', context = context_dict)
 
 @login_required
