@@ -4,7 +4,7 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Image, Munro, UserLikeArea, UserLikeMunro
+from rango.models import Area, Hiker, Image, Munro, Report, UserLikeArea, UserLikeMunro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -68,9 +68,6 @@ def munro(request, munro_name_slug):
         context_dict['munro'] = None
     return render(request, 'rango/munro.html', context=context_dict)
 
-
-    
-
 @login_required
 def hike_report(request):
 
@@ -88,18 +85,24 @@ def hike_report(request):
         
         form = HikeReportForm(request.POST) 
         munro = Munro.objects.get(slug=munro_name)
-        
+
+
+
         if form.is_valid(): #ensures form is valid before making changes to the application/database
             post = form.save(commit=False) 
             post.author = current_user
             post.munro = munro
             post.save() 
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))#returns to previous page after post
+            return redirect(reverse('rango:view_hike_reports'))
 
     else: 
          form=HikeReportForm() 
     return render(request, 'rango/post_report.html', {'form': form}) 
 
+def view_hike_reports(request):
+    reports = Report.objects.all()
+    context_dict = {'reports' : reports}
+    return render(request, 'rango/view_hike_reports.html', context=context_dict)
 
 def area(request):
     area_list = Area.objects.order_by('name')

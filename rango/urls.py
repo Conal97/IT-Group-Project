@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path, include
 from rango import views
 
@@ -20,5 +21,6 @@ urlpatterns = [
     path('user_likes_area/', views.UserLikesArea.as_view(), name='user_likes_area'),
     path('user_likes_munro/', views.UserLikesMunro.as_view(), name='user_likes_munro'),
     path('post_report/', views.hike_report, name='post_report'),
-    path('suggest/', views.AreaSuggestionView.as_view(), name='suggest')
+    path('suggest/', views.AreaSuggestionView.as_view(), name='suggest'),
+    path('view_hike_reports/', views.view_hike_reports, name='view_hike_reports'),
 ]

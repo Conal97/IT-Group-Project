@@ -5,6 +5,7 @@
 Post a Hike Report
 {% endblock %}
 
+
 {% block body_block %}
     <body>
         <h1>Your Hike Report</h1>
@@ -12,10 +13,14 @@ Post a Hike Report
             <form id="hike_report" method="post" action="/rango/post_report/">
                 {% csrf_token %}
                 How hard did you find this munro? 
-                {{ form.select }}
-                Tell us about your experience below:  
+                <br />
+                {{ form.difficulty}}
+                <br />
+                Tell us about your experience below: 
+                <br /> 
                 {{ form.report_text }} 
-                <input type="submit" name="submit" value="Post Hike Report" />
+                <br />
+                <input type="submit" size="100" name="submit" value="Post Hike Report" />
             </form>
         </div>
     </body>

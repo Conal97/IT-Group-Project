@@ -1,0 +1,37 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Hiker Reports
+{% endblock %}
+
+{% block body_block %}
+
+    <table style = "width: 75%">
+        <tr>
+            <th>Author</th>
+            <th>Munro</th>
+            <th>Difficulty Level</th>
+            <th>Report</th>
+        </tr>
+
+        {% for report in reports %}
+
+        <tr>
+            <td> {{ report.author }}</td>
+            <td> {{ report.munro }}</td>
+            <td> {{ report.difficulty }}</td>
+            <td> {{ report.report_text }}</td>
+        </tr>
+
+        {% endfor %}
+
+
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+    
+
+{% endblock %}

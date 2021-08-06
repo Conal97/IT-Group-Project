@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
+from rango.choices import *
 
 
 Max_Length = 128 #default max length
@@ -129,9 +129,8 @@ class Report(models.Model): #text that user uploads about a munro
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     picture = models.ImageField(upload_to ='report_images', blank = True)
-    difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
-    difficulty = models.IntegerField(default = 0, validators=[MaxValueValidator(10), MinValueValidator(1)])
+    difficulty = models.IntegerField(choices = CHOICES, default = 1)
     munro = models.ForeignKey(Munro, on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         verbose_name_plural='Reports'

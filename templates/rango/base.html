@@ -46,6 +46,7 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'rango:index' %}">Home</a></li>
                             <li class="nav-item "><a class="nav-link" href="{% url 'rango:about' %}">About</a></li>
                             <li class="nav-item "><a class="nav-link" href="{% url 'rango:photo_gallery' %}">Photo Gallery</a></li>
+                            <li class="nav-item "><a class="nav-link" href="{% url 'rango:view_hike_reports' %}">Hike Reports</a></li>
                         {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
