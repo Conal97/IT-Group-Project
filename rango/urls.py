@@ -6,10 +6,6 @@ app_name = 'rango'
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
-    #path('register/', views.register, name='register'),
-    #path('login/', views.user_login, name='login'),
-    #path('logout/', views.user_logout, name='logout'),
-    path('restricted/', views.restricted, name='restricted'),
     path('areas/', views.area, name='areas'),
     path('area/<slug:area_name_slug>/', views.show_area, name='show_area'),
     path('search', views.search, name='search'),
@@ -22,5 +18,6 @@ urlpatterns = [
     path('like_area/', views.LikeAreaView.as_view(), name='like_area'),
     path('like_munro/', views.LikeMunroView.as_view(), name='like_munro'),
     path('user_likes_area/', views.UserLikesArea.as_view(), name='user_likes_area'),
+    path('user_likes_munro/', views.UserLikesMunro.as_view(), name='user_likes_munro'),
     path('post_report/', views.hike_report, name='post_report'),
 ]

@@ -25,11 +25,11 @@
         {% endif %}
         <br />
         <div>
+             <!-- Allows the user to upload their profile picture -->
             {% if selected_user == user %}
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ profile_form.as_p }}
-
                 <input type="submit" value="Update Picture" name = "Update Picture" />
             </form>
             {% endif %}
@@ -43,17 +43,16 @@
         
         {% if selected_user == user %}  
 
+             <!-- Selection options are munros from munro model -->
             <label for="munros">Bag a munro:</label>
             <select id="munros" name="munros">
-                
+                <option disabled selected value> -- select an option -- </option>
                 {% for munro in munros %}
-
-                    {% if munro not in hiker_profile.bagged_as_list %}
                     <option value = "{{ munro }}"> {{ munro }}</option>
-                    {% endif %}
                 {% endfor %}
             </select>
 
+             <!-- Allows user to add munros to their bagged munros -->
             <form method="post" action="." >
                 {% csrf_token %}
                 {% for field in bagged_form %}
@@ -65,6 +64,7 @@
             <br>
 
             <p>
+                 <!-- Display bagged munros -->
                 <strong>Your bagged munros: </strong>
                     <ul>
                         {% for bagged in hiker_profile.bagged_as_list %}
@@ -77,6 +77,7 @@
             
             {% else %}
             <p>
+                 <!-- Only user can edit their page, else just display it -->
                 <strong>Your bagged munros: </strong>
                 {% for bagged in hiker_profile.bagged_as_list %}
                     {{ bagged }}<br>
