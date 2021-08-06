@@ -6,171 +6,28 @@
 {% endblock %}
 
 {% block body_block %}
-<section id="gallery">
-    <div class="container p-2">
-       <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="/static/images/skye.jpg" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">First Groovy Photo</h5>
-                        <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                        <!-- using anchor tag since only visual not real btn -->
-                        <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="/static/images/ben_lomond1.jpg" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">Second Groovy Photo</h5>
-                        <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                        <!-- using anchor tag since only visual not real btn -->
-                        <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="/static/images/ben_lomond2.jpg" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">Third Groovy Photo</h5>
-                        <p class="card-text">Some random text about Photos and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                        <!-- using anchor tag since only visual not real btn -->
-                        <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                    </div>
-                </div>
-            </div>
-       </div>
-
-       <div class="row">
-        <div class="col-lg-4 mb-4">
-            <div class="card">
-                <img class="card-img-top" src="/static/images/skye.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">First Groovy Photo</h5>
-                    <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                    <!-- using anchor tag since only visual not real btn -->
-                    <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                </div>
-            </div>
+    <section id="gallery">
+        <div class="container p-2">
+        <div class="row">
+                {% if images %}
+                    {% for image in images %} 
+                    
+                            <div class="col-lg-4 mb-4">
+                                <div class="card-body">
+                                    <img class="card-img-top img-thumbnail" src="/static/images/{{ image.name }}" alt="">
+                                    <h5 class="card-title">{{image.title}}</h5>
+                                    <p class="card-text">{{image.description}}</p>
+                                    <!-- using anchor tag since only visual not real btn -->
+                                    <a href="" class="btn btn-outline-success btn-sm">Download</a>
+                                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
+                                </div>
+                            </div>
+                
+                    {% endfor %}
+                {% else %} 
+                    <strong>No images currently in munro.</strong>
+                {% endif %} 
         </div>
-
-        <div class="col-lg-4 mb-4">
-            <div class="card">
-                <img class="card-img-top" src="/static/images/ben_lomond1.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Second Groovy Photo</h5>
-                    <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                    <!-- using anchor tag since only visual not real btn -->
-                    <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                </div>
-            </div>
         </div>
-
-        <div class="col-lg-4 mb-4">
-            <div class="card">
-                <img class="card-img-top" src="/static/images/ben_lomond2.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">Third Groovy Photo</h5>
-                    <p class="card-text">Some random text about Photos and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                    <!-- using anchor tag since only visual not real btn -->
-                    <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                </div>
-            </div>
-        </div>
-   </div>
-
-   <div class="row">
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/skye.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">First Groovy Photo</h5>
-                <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/ben_lomond1.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Second Groovy Photo</h5>
-                <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/ben_lomond2.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Third Groovy Photo</h5>
-                <p class="card-text">Some random text about Photos and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/skye.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">First Groovy Photo</h5>
-                <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/ben_lomond1.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Second Groovy Photo</h5>
-                <p class="card-text">Some random text about Photo and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="/static/images/ben_lomond2.jpg" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Third Groovy Photo</h5>
-                <p class="card-text">Some random text about Photos and how grooovy and colourful it looks! Cause it does look groovy and colourful!</p>
-                <!-- using anchor tag since only visual not real btn -->
-                <a href="" class="btn btn-outline-success btn-sm">Download</a>
-                <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
-</section>
+    </section>
 {% endblock %}
