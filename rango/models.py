@@ -37,6 +37,7 @@ class Munro(models.Model):
     likes = models.IntegerField(default=0)
     mapslink = models.CharField(default="", max_length=2048)
 
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Munro, self).save(*args, **kwargs)
@@ -90,6 +91,7 @@ class Hiker(models.Model):
     bagged =  models.CharField(max_length = 300, default='', blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     verified = models.BooleanField(default=False)
+    munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
