@@ -2,22 +2,25 @@ import json
 import requests
 
 def read_bing_key():
-    # Reads the secret key. DM.
-    bing_api_key = None
+    # # Reads the secret key. DM.
+    # bing_api_key = None
 
-    try:
-        with open('bing.key', 'r') as f:
-            bing_api_key = f.readline().strip()
-    except:
-        try:
-            with open('../bing.key') as f:
-                bing_api_key = f.readline().strip()
-        except:
-            raise IOError('bing.key file not found')
+    # try:
+    #     with open('bing.key', 'r') as f:
+    #         bing_api_key = f.readline().strip()
+    # except:
+    #     try:
+    #         with open('../bing.key') as f:
+    #             bing_api_key = f.readline().strip()
+    #     except:
+    #         raise IOError('bing.key file not found')
     
-    if not bing_api_key:
-        raise KeyError('Bing key not found')
+    # if not bing_api_key:
+    #     raise KeyError('Bing key not found')
     
+    # For marking purposes
+    bing_api_key = 'ffaae0bb26de42b198627c81e0eb1a8c'
+
     return bing_api_key
 
 def run_query(search_terms):
