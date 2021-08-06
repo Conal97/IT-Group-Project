@@ -12,14 +12,26 @@
 {% block body_block %}
     <div class ="pb-4">
         <strong id="view_count">{{ munro.views }}</strong> views
-        <strong id="like_count">{{ munro.likes }}</strong> likes
+        <strong id="like_count_munro">{{ munro.likes }}</strong> likes
         {% if user.is_authenticated %}
-            <button id="like_btn_munro"
-            data-munroslug="{{ munro.slug }}"
-            class="btn btn-primary btn-sm"
-            type="button">
-            <span data-feather="thumbs-up"></span>Like Munro</button>
-        {% endif %}
+            {% if userlikemunro.has_liked %}
+                <button id="unlike_btn_munro"
+                data-munroslug="{{ munro.slug }}"
+                data-username="{{ user.username }}"
+                data-likeunlike="unlike"
+                class="btn btn-danger btn-sm"
+                type="button">
+                <span data-feather="thumbs-down"></span>Unlike Munro</button>          
+            {% else %}
+                <button id="like_btn_munro"
+                data-munroslug="{{ munro.slug }}"
+                data-username="{{ user.username }}"
+                data-likeunlike="like"
+                class="btn btn-primary btn-sm"
+                type="button">
+                <span data-feather="thumbs-up"></span>like Munro</button> 
+            {% endif %}
+        {% endif %} 
     </div>
     
     <div class="container">

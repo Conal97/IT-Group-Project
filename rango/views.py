@@ -4,7 +4,7 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Munro, UserLikeArea
+from rango.models import Area, Hiker, Munro, UserLikeArea, UserLikeMunro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -126,6 +126,13 @@ def show_munro(request, munro_name_slug):
         context_dict['munro'] = None
         context_dict['images'] = None 
     
+    try:
+        current_user = request.user
+        userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
+        context_dict['userlikemunro'] = userlikemunro
+    except UserLikeMunro.DoesNotExist:
+        context_dict['userlikemunro'] = None
+    
     return render(request, 'rango/munro.html', context=context_dict)
 
 def search_munros(request):
@@ -163,6 +170,7 @@ def goto_url(request):
     else:
         return redirect(reverse('rango:index')) 
 
+# Class to carry out server-side logic if a user likes a area or unlikes
 class UserLikesArea(View):
     #Only can like area if logged in
     @method_decorator(login_required)
@@ -196,12 +204,44 @@ class UserLikesArea(View):
 
         user_likes_area.save()
 
-        print(area)
-        print(user)
-        print(user_likes_area.has_liked)
-
         return HttpResponse(user_likes_area.has_liked)
 
+class UserLikesMunro(View):
+    #Only can like area if logged in
+    @method_decorator(login_required)
+    def get(self, request):
+
+        munro_slug = request.GET['munro_slug']
+        user_name = request.GET['user_name']
+        like_unlike = request.GET['like_unlike']
+        
+        try:
+            munro = Munro.objects.get(slug=munro_slug)
+        except Munro.DoesNotExist:
+            return None
+
+        try:
+            user = User.objects.get(username=user_name)
+        except User.DoesNotExist:
+            return None
+
+        try:
+            user_likes_munro = UserLikeMunro.objects.get_or_create(munro = munro, user = user)[0]
+        except UserLikeMunro.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        if like_unlike == 'like':
+            user_likes_munro.has_liked = True
+        else:
+            user_likes_munro.has_liked = False
+
+        user_likes_munro.save()
+
+        return HttpResponse(user_likes_munro.has_liked)
+
+# view to show number of likes of an area
 class LikeAreaView(View):
     #Only can like area if logged in
     @method_decorator(login_required)
@@ -230,6 +270,7 @@ class LikeMunroView(View):
     @method_decorator(login_required)
     def get(self, request):
         munro_slug = request.GET['munro_slug']
+        like_unlike = request.GET['like_unlike']
 
         try:
             munro = Munro.objects.get(slug = munro_slug)
@@ -238,7 +279,11 @@ class LikeMunroView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        munro.likes = munro.likes + 1
+        if like_unlike == 'like':
+            munro.likes = munro.likes + 1
+        else:
+            munro.likes = munro.likes - 1
+
         munro.save()
 
         return HttpResponse(munro.likes)
