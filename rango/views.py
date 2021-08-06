@@ -148,10 +148,42 @@ def search_munros(request):
         searched = request.POST['searched']
         munros = Munro.objects.filter(name__contains=searched)
 
-        return render(request, 'rango/search_munros.html', {'searched':searched, 'munros': munros})
+        return render(request, 'rango/search_munros.html', {'searched':searched, 'munros': munros, 'pageheading' : 'Search Results'})
     
     else:
         return render(request, 'rango/search_munros.html', {})
+
+# Render areas page with new area suggestions 
+class AreaSuggestionView(View):
+    def get(self, request):
+        area_list = []
+
+        if 'suggestion' in request.GET:
+            suggestion = request.GET['suggestion']
+        else:
+            suggestion = ''
+        
+        area_list = get_area_list(max_results=8,starts_with=suggestion)
+        
+        # If search bar is empty
+        if len(area_list) == 0:
+            area_list = Area.objects.order_by('name')
+       
+        return render(request,'rango/areas.html', {'areas': area_list})
+
+# Helper to get new area list depending on search input
+def get_area_list(max_results, starts_with):
+    area_list = []
+
+    if starts_with:
+        area_list = Area.objects.filter(name__istartswith=starts_with)
+    
+    # If area list is bigger than max list, just show max number in area list
+    if max_results > 0:
+        if len(area_list) > max_results:
+            area_list = area_list[:max_results]
+    
+    return area_list
 
 # URL tracking view - to keep track of clicks
 def goto_url(request):

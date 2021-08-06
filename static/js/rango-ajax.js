@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    // When user clicks like or unlike button on area page
     $('#like_btn_area, #unlike_btn_area').click(function() {
         var areaSlug;
         var username;
@@ -11,6 +13,7 @@ $(document).ready(function() {
         $.get('/rango/like_area/',
             {'area_slug': areaSlug, 'like_unlike' : likeUnlike},
             function(data) {
+                //with result from get request, update html with new data
                 $('#like_count').html(data); 
         })
 
@@ -30,6 +33,7 @@ $(document).ready(function() {
         })      
     });
 
+    // When user clicks like or unlike button on munro page
     $('#unlike_btn_munro, #like_btn_munro').click(function() {
         var munroSlug;
         var username;
@@ -57,6 +61,19 @@ $(document).ready(function() {
                  $('#unlike_btn_munro').hide();
              }
      })   
+    });
+
+    // If user searches something in area search bar, find area suggestions and load back to html
+    $('#search-input').keyup(function() {
+        var query;
+        query = $(this).val();
+        
+        $.get('/rango/suggest/',
+            {'suggestion': query},
+            function(data) {
+                //update areas-listing div
+                $('#areas-listing').html(data);
+        })
     });
 
 });
