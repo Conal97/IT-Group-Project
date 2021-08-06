@@ -102,13 +102,16 @@ def show_area(request, area_name_slug):
         context_dict['pageheading'] = None 
         context_dict['area'] = None
         context_dict['munros'] = None
-
-    try:
-        current_user = request.user
-        userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
-        context_dict['userlikearea'] = userlikearea
-    except UserLikeArea.DoesNotExist:
-        context_dict['userlikearea'] = None
+    
+    current_user = request.user
+    if request.user.is_authenticated:
+        try:
+            # current_user = request.user
+            # userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
+            userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
+            context_dict['userlikearea'] = userlikearea
+        except UserLikeArea.DoesNotExist:
+            context_dict['userlikearea'] = None
 
     return render(request, 'rango/area.html', context=context_dict)
 
@@ -126,13 +129,14 @@ def show_munro(request, munro_name_slug):
         context_dict['munro'] = None
         context_dict['images'] = None 
     
-    try:
-        current_user = request.user
-        userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
-        context_dict['userlikemunro'] = userlikemunro
-    except UserLikeMunro.DoesNotExist:
-        context_dict['userlikemunro'] = None
-    
+    current_user = request.user
+    if request.user.is_authenticated:
+        try:
+            userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
+            context_dict['userlikemunro'] = userlikemunro
+        except UserLikeArea.DoesNotExist:
+            context_dict['userlikemunro'] = None
+
     return render(request, 'rango/munro.html', context=context_dict)
 
 def search_munros(request):
