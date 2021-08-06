@@ -15,23 +15,39 @@
         <strong id="like_count_munro">{{ munro.likes }}</strong> likes
         {% if user.is_authenticated %}
             {% if userlikemunro.has_liked %}
-                <button id="unlike_btn_munro"
-                data-munroslug="{{ munro.slug }}"
-                data-username="{{ user.username }}"
-                data-likeunlike="unlike"
-                class="btn btn-danger btn-sm"
-                type="button">
-                <span data-feather="thumbs-down"></span>Unlike Munro</button>          
+            <button id="like_btn_munro"
+            data-munroslug="{{ munro.slug }}"
+            data-username="{{ user.username }}"
+            data-likeunlike="like"
+            class="btn btn-primary btn-sm d-none"
+            type="button">
+            <span data-feather="thumbs-up"></span>like Munro</button> 
+
+            <button id="unlike_btn_munro"
+            data-munroslug="{{ munro.slug }}"
+            data-username="{{ user.username }}"
+            data-likeunlike="unlike"
+            class="btn btn-danger btn-sm"
+            type="button">
+            <span data-feather="thumbs-down"></span>Unlike Munro</button>          
             {% else %}
-                <button id="like_btn_munro"
-                data-munroslug="{{ munro.slug }}"
-                data-username="{{ user.username }}"
-                data-likeunlike="like"
-                class="btn btn-primary btn-sm"
-                type="button">
-                <span data-feather="thumbs-up"></span>like Munro</button> 
+            <button id="like_btn_munro"
+            data-munroslug="{{ munro.slug }}"
+            data-username="{{ user.username }}"
+            data-likeunlike="like"
+            class="btn btn-primary btn-sm"
+            type="button">
+            <span data-feather="thumbs-up"></span>like Munro</button>
+            
+            <button id="unlike_btn_munro"
+            data-munroslug="{{ munro.slug }}"
+            data-username="{{ user.username }}"
+            data-likeunlike="unlike"
+            class="btn btn-danger btn-sm d-none"
+            type="button">
+            <span data-feather="thumbs-down"></span>Unlike Munro</button>           
             {% endif %}
-        {% endif %} 
+        {% endif %}
     </div>
     
     <div class="container">

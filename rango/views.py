@@ -1,3 +1,4 @@
+from django.forms.models import ALL_FIELDS
 from rango.bing_search import run_query
 from django.db.models.query import prefetch_related_objects
 from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
@@ -53,7 +54,7 @@ def photo_gallery(request):
     context_dict = {}
     context_dict['pageheading'] = 'Photo Gallery'
     context_dict['images'] = images
-    
+
     return render(request, 'rango/photo_gallery.html', context = context_dict)
 
 

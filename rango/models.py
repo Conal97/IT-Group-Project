@@ -106,7 +106,6 @@ class Image(models.Model): #images associated with a particular munro
 
     def __str__(self):
         return self.name
- 
         
 class Hiker(models.Model): #extend upon user, with added functionality for the Rango site
     user = models.OneToOneField(User, on_delete=models.CASCADE)

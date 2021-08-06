@@ -22,13 +22,24 @@ $(document).ready(function() {
             {'area_slug': areaSlug, 'user_name': username, 'like_unlike' : likeUnlike},
             function(data) {
                 if (data) {
-                    //if liked, hide like button
-                    $('#like_btn_area').hide();
-                    $('#unlike_btn_area').hide();
+                    // if button has disable class remove it, otherwise add
+                    if( $('#like_btn_area').hasClass("d-none") ){
+                        $('#like_btn_area').removeClass("d-none");
+                        $('#unlike_btn_area').addClass("d-none");
+                    } else {
+                        $('#like_btn_area').addClass("d-none");
+                        $('#unlike_btn_area').removeClass("d-none");
+                    }
+                   
                 } else{
-                    //if liked, hide like button
-                    $('#like_btn_area').hide();
-                    $('#unlike_btn_area').hide();
+
+                    if( $('#like_btn_area').hasClass("d-none") ){
+                        $('#like_btn_area').removeClass("d-none");
+                        $('#unlike_btn_area').addClass("d-none");
+                    } else {
+                        $('#like_btn_area').addClass("d-none");
+                        $('#unlike_btn_area').removeClass("d-none");
+                    }
                 }
         })      
     });
@@ -51,15 +62,26 @@ $(document).ready(function() {
          $.get('/rango/user_likes_munro/',
          {'munro_slug': munroSlug, 'user_name': username, 'like_unlike' : likeUnlike},
          function(data) {
-             if (data) {
-                 //if liked, hide like button
-                 $('#like_btn_munro').hide();
-                 $('#unlike_btn_munro').hide();
-             } else{
-                 //if liked, hide like button
-                 $('#like_btn_munro').hide();
-                 $('#unlike_btn_munro').hide();
-             }
+            if (data) {
+                // if button has disable class remove it, otherwise add
+                if( $('#like_btn_munro').hasClass("d-none") ){
+                    $('#like_btn_munro').removeClass("d-none");
+                    $('#unlike_btn_munro').addClass("d-none");
+                } else {
+                    $('#like_btn_munro').addClass("d-none");
+                    $('#unlike_btn_munro').removeClass("d-none");
+                }
+               
+            } else{
+
+                if( $('#like_btn_munro').hasClass("d-none") ){
+                    $('#like_btn_munro').removeClass("d-none");
+                    $('#unlike_btn_munro').addClass("d-none");
+                } else {
+                    $('#like_btn_munro').addClass("d-none");
+                    $('#unlike_btn_munro').removeClass("d-none");
+                }
+            }
      })   
     });
 
