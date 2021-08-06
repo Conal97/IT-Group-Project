@@ -4,7 +4,7 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Munro, UserLikeArea, UserLikeMunro
+from rango.models import Area, Hiker, Image, Munro, UserLikeArea, UserLikeMunro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -48,7 +48,12 @@ def search(request):
     return render(request, 'rango/search.html', {'result_list':result_list})
 
 def photo_gallery(request):
-    context_dict = {'pageheading': 'Photo Gallery'}
+    images = Image.objects.all()
+
+    context_dict = {}
+    context_dict['pageheading'] = 'Photo Gallery'
+    context_dict['images'] = images
+    
     return render(request, 'rango/photo_gallery.html', context = context_dict)
 
 
@@ -100,12 +105,13 @@ def show_area(request, area_name_slug):
         context_dict['area'] = None
         context_dict['munros'] = None
 
-    try:
-        current_user = request.user
-        userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
-        context_dict['userlikearea'] = userlikearea
-    except UserLikeArea.DoesNotExist:
-        context_dict['userlikearea'] = None
+    current_user = request.user
+    if request.user.is_authenticated:
+        try:
+            userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
+            context_dict['userlikearea'] = userlikearea
+        except UserLikeArea.DoesNotExist:
+            context_dict['userlikearea'] = None
 
     return render(request, 'rango/area.html', context=context_dict)
 
@@ -123,6 +129,14 @@ def show_munro(request, munro_name_slug):
         context_dict['munro'] = None
         context_dict['images'] = None 
     
+    current_user = request.user
+    if request.user.is_authenticated:
+        try:
+            userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
+            context_dict['userlikemunro'] = userlikemunro
+        except UserLikeMunro.DoesNotExist:
+            context_dict['userlikemunro'] = None
+
     return render(request, 'rango/munro.html', context=context_dict)
 
 # For searching munros in search bar
@@ -195,10 +209,6 @@ class UserLikesArea(View):
 
         user_likes_area.save()
 
-        print(area)
-        print(user)
-        print(user_likes_area.has_liked)
-
         return HttpResponse(user_likes_area.has_liked)
 
 class UserLikesMunro(View):
@@ -264,6 +274,7 @@ class LikeMunroView(View):
     @method_decorator(login_required)
     def get(self, request):
         munro_slug = request.GET['munro_slug']
+        like_unlike = request.GET['like_unlike']
 
         try:
             munro = Munro.objects.get(slug = munro_slug)
@@ -272,7 +283,11 @@ class LikeMunroView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        munro.likes = munro.likes + 1
+        if like_unlike == 'like':
+            munro.likes = munro.likes + 1
+        else:
+            munro.likes = munro.likes - 1
+
         munro.save()
 
         return HttpResponse(munro.likes)
