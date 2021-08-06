@@ -128,10 +128,12 @@ def show_munro(request, munro_name_slug):
     
     return render(request, 'rango/munro.html', context=context_dict)
 
+# For searching munros in search bar
 def search_munros(request):
 
     if request.method == "POST":
 
+        # Filter munro model for what was searched
         searched = request.POST['searched']
         munros = Munro.objects.filter(name__contains=searched)
 
@@ -243,7 +245,7 @@ class LikeMunroView(View):
 
         return HttpResponse(munro.likes)
 
-
+# For updating profile
 class ProfileView(View):
     def get_user_details(self, username):
         try:
@@ -251,6 +253,7 @@ class ProfileView(View):
         except User.DoesNotExist:
             return None
         
+        # User details and forms required for updating the user profile
         hiker_profile = Hiker.objects.get_or_create(user=user)[0]
         profile_form = HikerProfileForm({'picture': hiker_profile.picture})
         bagged_form = HikerBaggedMunrosForm({'bagged': hiker_profile.bagged})
@@ -264,6 +267,7 @@ class ProfileView(View):
         except TypeError:
             return redirect(reverse('rango:index'))
 
+        # Require munros for options selection
         munros = Munro.objects.all()
         
         context_dict = {'hiker_profile': hiker_profile,
@@ -281,9 +285,10 @@ class ProfileView(View):
         except TypeError:
             return redirect(reverse('rango:index'))
 
+         # Require munros for options selection
         munros = Munro.objects.all()
         
-        # Update the hiker profile picture
+        # If the user chooses to update their profile picture
         if 'Update Picture' in request.POST:
             profile_form = HikerProfileForm(request.POST, request.FILES, instance=hiker_profile)
 
@@ -293,11 +298,8 @@ class ProfileView(View):
             else:
                 print(profile_form.errors)
 
-        
-
-        # Update bagged munros
+        # If the user chooses to update their bagged munros
         elif 'Update Bagged' in request.POST:
-            hiker = Hiker.objects.all()
             bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
             if bagged_form.is_valid():
                 bagged_form.save(commit=True)
@@ -333,59 +335,4 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
-
-'''def register(request):
-
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user=user
-
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            profile.save()
-
-            registered = True
-        else:
-            print(user_form.errors, profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    return render(request, 'rango/register.html',
-                            context= {  'user_form': user_form,
-                                        'profile_form': profile_form,
-                                        'registered': registered})'''
-
-'''def user_login(request): 
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return redirect(reverse('rango:index'))
-            else:
-                return HttpResponse("Your Rango account is disabled.")
-        else: 
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details provided")
-    else:
-        return render(request, 'rango/user_login.html')'''
-
-'''def user_logout(request):
-    logout(request)
-    return redirect(reverse('rango:index'))'''
 

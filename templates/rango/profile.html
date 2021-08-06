@@ -46,9 +46,13 @@
             <label for="munros">Bag a munro:</label>
             <select id="munros" name="munros">
                 
+                <option disabled selected value> -- select an option -- </option>
                 {% for munro in munros %}
 
-                    {% if munro not in hiker_profile.bagged_as_list %}
+
+
+
+                    {% if munro.name not in hiker_profile.bagged.split(',') %}
                     <option value = "{{ munro }}"> {{ munro }}</option>
                     {% endif %}
                 {% endfor %}

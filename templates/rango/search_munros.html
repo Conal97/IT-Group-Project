@@ -16,7 +16,6 @@
                 <ul>
                 {% for munro in munros %}
                     <li><a href="{% url 'rango:goto' %}?page_name={{ munro.slug }}">{{ munro.name }}</a>
-                    <!-- to do: link to munro page (require munros.html) -->
                 {% endfor %}
                 </ul>
             {% else %}
