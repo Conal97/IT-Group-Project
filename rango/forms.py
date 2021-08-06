@@ -16,11 +16,6 @@ class HikerBaggedMunrosForm(forms.ModelForm):
         model = Hiker
         fields = ('bagged',)
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        bagged_string = cleaned_data.get('bagged')
-
-
 class HikeReportForm(forms.ModelForm):
     report_text = forms.CharField(max_length=3000, help_text='Enter your report here.')
     difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
@@ -28,20 +23,6 @@ class HikeReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ('difficulty', 'report_text')
-
-
-'''
-        def clean(self):
-            cleaned_data = self.cleaned_data
-            url = cleaned_data.get('url')
-
-
-            if url and not url.startswith('http://'):
-                url = f'http://{url}'
-                cleaned_data['url']=url
-
-            return cleaned_data'''
-
 
 
 class HikeReportForm(forms.ModelForm):

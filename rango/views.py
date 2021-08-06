@@ -270,11 +270,14 @@ class ProfileView(View):
             else:
                 print(profile_form.errors)
 
+        
+
         # Update bagged munros
         elif 'Update Bagged' in request.POST:
+            hiker = Hiker.objects.all()
             bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
             if bagged_form.is_valid():
-                bagged_form.save(commit=True)
+                bagged_munro = bagged_form.save(commit=True)
                 return redirect(reverse('rango:profile', kwargs={'username': username}))
             else:
                 print(bagged_form.errors)
