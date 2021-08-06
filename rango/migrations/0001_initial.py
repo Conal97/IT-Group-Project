@@ -90,7 +90,8 @@ class Migration(migrations.Migration):
                 ('picture', models.ImageField(blank=True, upload_to='report_images')),
                 ('report_text', models.CharField(max_length=3000)),
                 ('difficulty', models.IntegerField(default=0, validators=[django.core.validators.MaxValueValidator(10), django.core.validators.MinValueValidator(1)])),
-                ('munro', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rango.Munro')),
+                ('author', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('munro', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='rango.Munro')),
             ],
             options={
                 'verbose_name_plural': 'Reports',

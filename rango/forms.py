@@ -1,8 +1,9 @@
 from django import forms
-from django.forms import fields
+from django.forms import ModelForm, Textarea
 from django.forms.fields import CharField
 from rango.models import BaggedMunros, Hiker, Report
 from django.contrib.auth.models import User
+from rango.choices import *
 
 # Form for profile picture change
 class HikerProfileForm(forms.ModelForm):
@@ -26,17 +27,12 @@ class HikeReportForm(forms.ModelForm):
 
 
 class HikeReportForm(forms.ModelForm):
-    report_text = forms.CharField(max_length=3000, widget=forms.Textarea(attrs={"rows":15, "cols":170}))
-    # difficulty = forms.IntegerField(initial=1, help_text='Rate the challenge out on a scale of 1-10') 
-    Options = (
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        ('5', '5'),
-     )
-    select = forms.ChoiceField(label='Your challenge rating out of 5 ', widget=forms.Select, choices=Options)
-    # author = Hiker.objects.get()
+    report_text = forms.CharField(max_length=3000, widget=forms.Textarea(attrs={"rows":8, "cols":85}))
+    difficulty = forms.ChoiceField(label='Your challenge rating out of 5 ', widget=forms.Select, choices=CHOICES)
+
     class Meta:
         model = Report
-        fields = ('select', 'report_text')
+        fields = ('difficulty', 'report_text')
+        widgets = {
+            'summary': Textarea(attrs={'rows':80, 'cols':20}),
+        }
