@@ -68,19 +68,19 @@ def populate():
     ben_nevis_images = [
         {'name' : 'Ben_Nevis_1.jpg',
         'title' : 'Ben Nevis',
-        'description' : 'First Ben Nevis pic',
+        'description' : 'Ben Nevis seen from the valley below.',
         'likes' : 30,
         },
 
         {'name' : 'Ben_Nevis_2.jpg',
         'title' : 'Ben Nevis',
-        'description' : 'Second Ben Nevis pic',
+        'description' : 'Looking down on the valley situated to the base of Ben Nevis.',
         'likes' : 20,
         },
 
         {'name' : 'Ben_Nevis_3.jpg',
         'title' : 'Ben Nevis',
-        'description' : 'Third Ben Nevis pic',
+        'description' : 'Ben Nevis with dramatic cloud cover.',
         'likes' : 10,
         },
     ]
@@ -88,19 +88,19 @@ def populate():
     ben_macdui_images = [
         {'name' : 'Ben_Macdui_1.jpeg',
         'title' : 'Ben Macdui',
-        'description' : 'First Ben Macdui pic',
+        'description' : 'A lone hiker makes his way across the rocky summit.',
         'likes' : 29,
         },
 
-        {'name' : 'Ben_Macdui_2.jpg',
+        {'name' : 'Ben_Macdui_2.jpeg',
         'title' : 'Ben Macdui',
-        'description' : 'Second Ben Macdui pic',
+        'description' : 'Long, winding path through the valley below.',
         'likes' : 19,
         },
 
-        {'name' : 'Ben_Macdui_3.jpg',
+        {'name' : 'Ben_Macdui_3.jpeg',
         'title' : 'Ben Macdui',
-        'description' : 'Third Ben Macdui pic',
+        'description' : 'A unique beauty spot beloved by wild campers in the area.',
         'likes' : 9,
         },
     ]
@@ -109,19 +109,19 @@ def populate():
     ben_lomond_images = [
         {'name' : 'Ben_Lomond_1.jpg',
         'title' : 'Ben Lomond',
-        'description' : 'First Ben Lomond pic',
+        'description' : 'Ben Lomond seen from the loch that shares its name.',
         'likes' : 31,
         },
 
         {'name' : 'Ben_Lomond_2.jpg',
         'title' : 'Ben Lomond',
-        'description' : 'Second Ben Lomond pic',
+        'description' : 'Looking down from the peak at what appears to be a sea of cloud cover.',
         'likes' : 21,
         },
 
         {'name' : 'Ben_Lomond_3.jpg',
         'title' : 'Ben Lomond',
-        'description' : 'Third Ben Lomond pic',
+        'description' : 'Route to the summit as seen by drone.',
         'likes' : 11,
         },
     ]
@@ -129,19 +129,19 @@ def populate():
     ben_vane_images = [
         {'name' : 'Ben_Vane_1.jpg',
         'title' : 'Ben Vane',
-        'description' : 'First Ben Vane pic',
+        'description' : 'Walkers ascend the craggy summit.',
         'likes' : 24,
         },
 
         {'name' : 'Ben_Vane_2.jpg',
         'title' : 'Ben Vane',
-        'description' : 'Second Ben Vane pic',
+        'description' : 'Hiker celebrates now being able to update their profile on our website.',
         'likes' : 12,
         },
 
-        {'name' : 'Ben_Vanes_3.jpg',
+        {'name' : 'Ben_Vane_3.jpg',
         'title' : 'Ben Vane',
-        'description' : 'Third Ben Vane pic',
+        'description' : 'Ben Vane seen from below.',
         'likes' : 3,
         },
     ]
