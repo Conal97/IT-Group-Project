@@ -136,19 +136,7 @@ class Report(models.Model): #text that user uploads about a munro
     class Meta:
         verbose_name_plural='Reports'
 
-
     def __str__(self):
-<<<<<<< HEAD
         return self.munro.name + ": " + self.author.username
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-
-    def __str__(self):
-        return self.user.username
-=======
-        return self.munro.name
->>>>>>> b26437f95d74bed7eeaa24968c9dca1b57e591b1
