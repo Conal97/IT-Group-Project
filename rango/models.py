@@ -125,17 +125,18 @@ class Hiker(models.Model):
 
 class Report(models.Model):
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
     difficulty = models.IntegerField(default = 0, validators=[MaxValueValidator(10), MinValueValidator(1)])
-    munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
+    munro = models.ForeignKey(Munro, on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         verbose_name_plural='Reports'
 
 
     def __str__(self):
-        return self.munro.name
+        return self.munro.name + ": " + self.author.username
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

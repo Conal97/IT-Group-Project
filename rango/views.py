@@ -68,14 +68,31 @@ def munro(request, munro_name_slug):
         context_dict['munro'] = None
     return render(request, 'rango/munro.html', context=context_dict)
 
+
+    
+
 @login_required
 def hike_report(request):
+
+    current_user = request.user
+    
+    # When request is get, access the munro name slug from the previous url
+    if request.method == "GET":
+        global munro_name
+        munro_name = request.META.get('HTTP_REFERER').split('/')[-2]
+
+    # Request is post -> post the form, updating the model
     if request.method == "POST":
+
+        # Get the username of author, form and munro the report is about
+        
         form = HikeReportForm(request.POST) 
+        munro = Munro.objects.get(slug=munro_name)
+
         if form.is_valid(): 
             post = form.save(commit=False) 
-            post.date = timezone.now() 
-            post.author = request.user 
+            post.author = current_user
+            post.munro = munro
             post.save() 
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
