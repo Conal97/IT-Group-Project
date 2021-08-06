@@ -15,7 +15,12 @@ class Area(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        if self.views < 0 :
+            self.views = 0
+        if self.likes < 0:
+            self.likes = 0
         super(Area, self).save(*args, **kwargs)
+
 
     class Meta:
         verbose_name_plural='Areas'
@@ -40,6 +45,10 @@ class Munro(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        if self.views < 0 :
+            self.views = 0
+        if self.likes < 0:
+            self.likes = 0
         super(Munro, self).save(*args, **kwargs)
     
     class Meta:
