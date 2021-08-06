@@ -91,7 +91,7 @@ class Hiker(models.Model):
     bagged =  models.CharField(max_length = 300, default='', blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     verified = models.BooleanField(default=False)
-    munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
+    munro = models.ForeignKey(Munro, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
