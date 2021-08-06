@@ -134,7 +134,7 @@ def show_munro(request, munro_name_slug):
         try:
             userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
             context_dict['userlikemunro'] = userlikemunro
-        except UserLikeArea.DoesNotExist:
+        except UserLikeMunro.DoesNotExist:
             context_dict['userlikemunro'] = None
 
     return render(request, 'rango/munro.html', context=context_dict)
