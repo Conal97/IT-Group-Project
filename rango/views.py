@@ -321,7 +321,8 @@ class ProfileView(View):
                         'selected_user': user,
                         'profile_form': profile_form,
                         'bagged_form': bagged_form,
-                        'munros': munros}
+                        'munros': munros,
+                        'pageheading' : user.username + "'s Profile"}
         
         return render(request, 'rango/profile.html', context_dict)
     
