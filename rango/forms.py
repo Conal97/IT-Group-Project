@@ -16,11 +16,6 @@ class HikerBaggedMunrosForm(forms.ModelForm):
         model = Hiker
         fields = ('bagged',)
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        bagged_string = cleaned_data.get('bagged')
-
-
 class HikeReportForm(forms.ModelForm):
     report_text = forms.CharField(max_length=3000, help_text='Enter your report here.')
     difficulty = forms.IntegerField(widget=forms.HiddenInput(), initial=0) 
@@ -28,42 +23,6 @@ class HikeReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ('difficulty', 'report_text')
-
-
-
-
-'''class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=128,
-                            help_text='Please enter the category name.')
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0) #even tho these are 
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0) #hidden still need to declare
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-
-    class Meta:
-        model = Category #associate form and model
-        fields = ('name',)
-
-class PageForm(forms.ModelForm):
-
-        title = forms.CharField(max_length = 128, help_text="Please enter the title of the page.")
-        url = forms.URLField(max_length =200, help_text='Please enter the URL of the page.')
-        views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-        
-        class Meta:
-            model = Page
-            exclude = ('category',)
-
-        def clean(self):
-            cleaned_data = self.cleaned_data
-            url = cleaned_data.get('url')
-
-
-            if url and not url.startswith('http://'):
-                url = f'http://{url}'
-                cleaned_data['url']=url
-
-            return cleaned_data'''
-
 
 
 class HikeReportForm(forms.ModelForm):

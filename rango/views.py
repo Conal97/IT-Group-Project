@@ -280,6 +280,8 @@ class ProfileView(View):
             (user, hiker_profile, profile_form, bagged_form) = self.get_user_details(username)
         except TypeError:
             return redirect(reverse('rango:index'))
+
+        munros = Munro.objects.all()
         
         # Update the hiker profile picture
         if 'Update Picture' in request.POST:
@@ -291,20 +293,23 @@ class ProfileView(View):
             else:
                 print(profile_form.errors)
 
+        
+
         # Update bagged munros
         elif 'Update Bagged' in request.POST:
+            hiker = Hiker.objects.all()
             bagged_form = HikerBaggedMunrosForm(request.POST, instance=hiker_profile)
             if bagged_form.is_valid():
-                bagged_form.save(commit=True)
+                bagged_munro = bagged_form.save(commit=True)
                 return redirect(reverse('rango:profile', kwargs={'username': username}))
             else:
                 print(bagged_form.errors)
-
         
         context_dict = {'hiker_profile': hiker_profile,
                         'selected_user': user,
                         'profile_form': profile_form,
-                        'bagged_form': bagged_form}
+                        'bagged_form': bagged_form,
+                        'munros': munros}
         
         return render(request, 'rango/profile.html', context_dict)
 

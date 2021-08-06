@@ -7,16 +7,18 @@
 
 {% block body_block %}
 
-    <center>
+
         {% if searched %}
             <h3> You searched for: {{ searched }}</h3>
             <br/>
 
             {% if munros %}
+                <ul>
                 {% for munro in munros %}
-                    <a href="{{ munro.url }}">{{ munro.name }}</a> <br/>
+                    <li><a href="{% url 'rango:goto' %}?page_name={{ munro.slug }}">{{ munro.name }}</a>
                     <!-- to do: link to munro page (require munros.html) -->
                 {% endfor %}
+                </ul>
             {% else %}
                 <h3><a href="{% url 'rango:search' %}"> Munro not found, search the web instead!</a></h3>
             {% endif %}
@@ -25,6 +27,6 @@
             <h3> You didn't enter a search term</h3>
         {% endif %}
        
-    </center>
+    
 
 {% endblock %}

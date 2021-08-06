@@ -36,42 +36,51 @@
         
         </div>
     <div>
+
+    <br/>
+
     </div id = "bagged">
         
-
         {% if selected_user == user %}  
 
+            <label for="munros">Bag a munro:</label>
+            <select id="munros" name="munros">
+                
+                {% for munro in munros %}
 
-            <label for="Munros">Bag a munro:</label>
-            <select id="munros" name="munro">
-
-            {% for munro in munros %}
-                <option value = "{{ munro }}"> {{ munro }}</option>
-            {% endfor %}
-
-
+                    {% if munro not in hiker_profile.bagged_as_list %}
+                    <option value = "{{ munro }}"> {{ munro }}</option>
+                    {% endif %}
+                {% endfor %}
             </select>
-
-
 
             <form method="post" action="." >
                 {% csrf_token %}
-                {{ bagged_form.as_p }}
-
+                {% for field in bagged_form %}
+                    {{ field }}
+                {% endfor %}
                 <input type="submit" value="Update bagged munros" name = "Update Bagged" />
             </form>
 
             <br>
 
             <p>
-                <strong>Tracker: </strong>
-                {{ hiker_profile.bagged }}
+                <strong>Your bagged munros: </strong>
+                    <ul>
+                        {% for bagged in hiker_profile.bagged_as_list %}
+                            <li>
+                                {{ bagged }}
+                            </li>
+                        {% endfor %}
+                    </ul>
             </p>
             
             {% else %}
             <p>
-                <strong>Tracker: </strong>
-                {{ hiker_profile.bagged }}
+                <strong>Your bagged munros: </strong>
+                {% for bagged in hiker_profile.bagged_as_list %}
+                    {{ bagged }}<br>
+                {% endfor %}
             </p>
         {% endif %}
 
