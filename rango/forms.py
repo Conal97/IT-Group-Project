@@ -4,13 +4,13 @@ from django.forms.fields import CharField
 from rango.models import BaggedMunros, Hiker, Report
 from django.contrib.auth.models import User
 
-
+# Form for profile picture change
 class HikerProfileForm(forms.ModelForm):
     class Meta:
         model = Hiker
         fields = ('picture',)
 
-    
+# Form for hiker bagged munro change  
 class HikerBaggedMunrosForm(forms.ModelForm):
     class Meta:
         model = Hiker

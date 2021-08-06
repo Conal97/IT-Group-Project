@@ -4,14 +4,13 @@ from rango.forms import HikeReportForm, HikerProfileForm, HikerBaggedMunrosForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import redirect, render
-from rango.models import Area, Hiker, Image, Munro, UserLikeArea, UserLikeMunro
+from rango.models import Area, Hiker, Munro, UserLikeArea, UserLikeMunro
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
-from rango.models import UserProfile
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
@@ -35,30 +34,23 @@ def about(request):
     context_dict = {'pageheading': 'About Rango'}
     return render(request, 'rango/about.html', context=context_dict)
 
+# For using the bing API to search the web
 def search(request):
     result_list = []
 
     if request.method == 'POST':
         query = request.POST['query'].strip()
 
+        # Use the bing search function
         if query:
-            # Use the bing search function
             result_list = run_query(query)
 
     return render(request, 'rango/search.html', {'result_list':result_list})
 
 def photo_gallery(request):
-    images = Image.objects.all()
-
-    context_dict = {}
-    context_dict['pageheading'] = 'Photo Gallery'
-    context_dict['images'] = images
-
+    context_dict = {'pageheading': 'Photo Gallery'}
     return render(request, 'rango/photo_gallery.html', context = context_dict)
 
-@login_required
-def restricted(request):
-    return render(request, 'rango/restricted.html')
 
 def munro(request, munro_name_slug):
     context_dict = {}
@@ -107,16 +99,13 @@ def show_area(request, area_name_slug):
         context_dict['pageheading'] = None 
         context_dict['area'] = None
         context_dict['munros'] = None
-    
-    current_user = request.user
-    if request.user.is_authenticated:
-        try:
-            # current_user = request.user
-            # userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
-            userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
-            context_dict['userlikearea'] = userlikearea
-        except UserLikeArea.DoesNotExist:
-            context_dict['userlikearea'] = None
+
+    try:
+        current_user = request.user
+        userlikearea = UserLikeArea.objects.get(area = area , user = current_user)
+        context_dict['userlikearea'] = userlikearea
+    except UserLikeArea.DoesNotExist:
+        context_dict['userlikearea'] = None
 
     return render(request, 'rango/area.html', context=context_dict)
 
@@ -134,14 +123,6 @@ def show_munro(request, munro_name_slug):
         context_dict['munro'] = None
         context_dict['images'] = None 
     
-    current_user = request.user
-    if request.user.is_authenticated:
-        try:
-            userlikemunro = UserLikeMunro.objects.get(munro = munro , user = current_user)
-            context_dict['userlikemunro'] = userlikemunro
-        except UserLikeMunro.DoesNotExist:
-            context_dict['userlikemunro'] = None
-
     return render(request, 'rango/munro.html', context=context_dict)
 
 # For searching munros in search bar
@@ -181,7 +162,6 @@ def goto_url(request):
     else:
         return redirect(reverse('rango:index')) 
 
-# Class to carry out server-side logic if a user likes a area or unlikes
 class UserLikesArea(View):
     #Only can like area if logged in
     @method_decorator(login_required)
@@ -215,6 +195,10 @@ class UserLikesArea(View):
 
         user_likes_area.save()
 
+        print(area)
+        print(user)
+        print(user_likes_area.has_liked)
+
         return HttpResponse(user_likes_area.has_liked)
 
 class UserLikesMunro(View):
@@ -225,7 +209,7 @@ class UserLikesMunro(View):
         munro_slug = request.GET['munro_slug']
         user_name = request.GET['user_name']
         like_unlike = request.GET['like_unlike']
-        
+
         try:
             munro = Munro.objects.get(slug=munro_slug)
         except Munro.DoesNotExist:
@@ -252,7 +236,6 @@ class UserLikesMunro(View):
 
         return HttpResponse(user_likes_munro.has_liked)
 
-# view to show number of likes of an area
 class LikeAreaView(View):
     #Only can like area if logged in
     @method_decorator(login_required)
@@ -281,7 +264,6 @@ class LikeMunroView(View):
     @method_decorator(login_required)
     def get(self, request):
         munro_slug = request.GET['munro_slug']
-        like_unlike = request.GET['like_unlike']
 
         try:
             munro = Munro.objects.get(slug = munro_slug)
@@ -290,11 +272,7 @@ class LikeMunroView(View):
         except ValueError:
             return HttpResponse(-1)
 
-        if like_unlike == 'like':
-            munro.likes = munro.likes + 1
-        else:
-            munro.likes = munro.likes - 1
-
+        munro.likes = munro.likes + 1
         munro.save()
 
         return HttpResponse(munro.likes)

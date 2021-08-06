@@ -107,6 +107,7 @@ class Hiker(models.Model):
     def __str__(self):
         return self.user.username
 
+    # Required to split bagged field into separate munros
     def bagged_as_list(self):
         return self.bagged.split(',')
 
@@ -115,13 +116,11 @@ class Hiker(models.Model):
 
 class Report(models.Model):
 
-    # author = models.OneToOneField(Hiker, on_delete=CASCADE)
     picture = models.ImageField(upload_to ='report_images', blank = True)
     difficulty = models.IntegerField(default = 0)
     report_text = models.CharField(max_length = 3000)
     difficulty = models.IntegerField(default = 0, validators=[MaxValueValidator(10), MinValueValidator(1)])
     munro = models.ForeignKey(Munro, on_delete=models.CASCADE)
-    #date = models.DateTimeField(null=True, blank=True)
     class Meta:
         verbose_name_plural='Reports'
 
